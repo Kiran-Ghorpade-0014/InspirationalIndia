@@ -1,7 +1,9 @@
 import './App.css';
 // import Dashboard from './Components/Dashboard/Dashboard';
 // import AppBar from './Components/AppBar';
-import Home from './Components/Home';
+import Home from './Components/Home/Home';
+// import SignIn from './Components/SignIn/SignIn';
+
 
 function App() {
   return (
@@ -9,6 +11,8 @@ function App() {
        {/* <Dashboard/> */}
        {/* <AppBar/> */}
        <Home/>
+       {/* <SignIn /> */}
+
     </>
   );
 }

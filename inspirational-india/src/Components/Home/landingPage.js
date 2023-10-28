@@ -122,7 +122,7 @@ function landingPage() {
                             {cards.map((card) => (
                             <Grid2 key={card} item xs={12} md={6} xl={6}>
                                 <item>
-                                    <Card />
+                                    <Card image="/images/snow-leoperd.jpg"/>
                                 </item>
                             </Grid2>
                             ))}

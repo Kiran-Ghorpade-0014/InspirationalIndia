@@ -1,12 +1,15 @@
 // import SliderImages from "../SliderImages";
-import Footer from "./Footer";
-import Appbar from "./MyAppBar";
-import LandingPage from "./landingPage";
+// import Footer from "../Shared/Footer";
+import Appbar from "../Shared/MyAppBar";
+// import LandingPage from "./landingPage";
+import Blog from '../Blog/Blog';
+
 
 function Home() {
     const style = {
-        backgroundImage : "url('./images/north_east_india.jpg')",
-        backgroundAttachment:'fixed',
+        // backgroundImage : "url('./images/north_east_india.jpg')",
+        // backgroundAttachment:'fixed',
+        backgroundColor:'#264651',
         backgroundPosition:'center',
         backgroundSize:'cover',
         backgroundRepeat: 'no-repeat',
@@ -23,13 +26,14 @@ function Home() {
           {/* <div> */}
                 <Appbar />
 
-                <LandingPage/>
+                {/* <LandingPage/> */}
                 <div>
                 {/* <SliderImages/> */}
+                <Blog/>
                 </div>
                   
 
-                <Footer />
+                {/* <Footer color="white"/> */}
         </div>
     </>
   );

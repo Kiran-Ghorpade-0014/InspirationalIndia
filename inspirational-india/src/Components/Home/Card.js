@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
-export default function MediaCard() {
+export default function MediaCard(props) {
   return (
     <>
       <Typography gutterBottom variant="subtitle" component="div" color="white">
@@ -12,7 +12,7 @@ export default function MediaCard() {
       <Card sx={{width:180, maxWidth: 250 }}>
         <CardMedia
           sx={{ height: 250 }}
-          image="/images/snow-leoperd.jpg"
+          image={props.image}
           title="snow leoperd"
         />
       </Card>

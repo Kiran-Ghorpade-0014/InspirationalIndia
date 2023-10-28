@@ -5,9 +5,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
-function Copyright() {
+function Copyright(props) {
   return (
-    <Typography variant="body2" color="white" align="center" sx={{ p:5}}>
+    <Typography variant="body2" color={props.color} align="center" sx={{ p:5}}>
       {'Copyright © '}
       <Link color="inherit" href="./">
         Inspirational India
