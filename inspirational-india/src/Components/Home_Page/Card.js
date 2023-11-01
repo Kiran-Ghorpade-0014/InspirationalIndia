@@ -11,7 +11,7 @@ export default function MediaCard(props) {
       </Typography>
       <Card sx={{width:180, maxWidth: 250 }}>
         <CardMedia
-          sx={{ height: 250 }}
+          sx={{ height: 230 }}
           image={props.image}
           title="snow leoperd"
         />

@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Footer from '../Shared/Footer';
+import Footer from '../UI_UX_Components/Footer';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -72,6 +72,14 @@ export default function SignIn() {
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mb: 2 }}
+            >
+              Admin Login
             </Button>
             <Grid container>
               {/* <Grid item xs>

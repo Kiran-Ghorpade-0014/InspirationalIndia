@@ -57,6 +57,7 @@ function Appbar() {
               color: "white",
               textDecoration: "none",
               flexGrow: 1,
+              textAlign:'center'
             }}
           >
             Inspirational India
@@ -174,7 +175,7 @@ function Appbar() {
               letterSpacing: ".3rem",
               color: "white",
               textDecoration: "none",
-              textAlign: "center",
+              textAlign: "center"
             }}
           >
             Inspirational India
