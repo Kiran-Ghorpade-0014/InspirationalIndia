@@ -38,13 +38,23 @@ export default function SignIn() {
             alignItems: 'center'
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5" color={'success'}>
-            Sign in
+            Register Yourself
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="text"
+              autoComplete="username"
+              autoFocus
+            />
             <TextField
               margin="normal"
               required
@@ -53,7 +63,6 @@ export default function SignIn() {
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
             />
             <TextField
               margin="normal"
@@ -63,26 +72,24 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
             />
             <Button
-              type="submit"
+              type="Register"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              href="#"
             >
-              Sign In
+              Register
             </Button>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mb: 2 }}
-              href="/adminsignin"
+              href="/"
             >
-              <Typography>
-              Admin Login
-              </Typography>
+              Cancel
             </Button>
             <Grid container sx={{mb: 4}}>
               {/* <Grid item xs>
@@ -91,8 +98,8 @@ export default function SignIn() {
                 </Link>
               </Grid> */}
               <Grid item>
-                <Link href="/registration" variant="body1">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/signin" variant="body1">
+                  {"Already have an account? Sign In"}
                 </Link>
               </Grid>
             </Grid>

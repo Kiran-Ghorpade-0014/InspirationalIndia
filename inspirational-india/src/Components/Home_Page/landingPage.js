@@ -1,16 +1,18 @@
-import * as React from "react";
+// import * as React from "react";
+import { useState,useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import Button from "@mui/joy/Button/Button";
 import Card from "./Card";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import Footer from "../UI_UX_Components/Footer";
+import { Link } from "react-router-dom";
 
-function landingPage() {
+function LandingPage() {
   const page_style = {
     color: "white",
     fontFamily: "arial",
     maxHeight: "100vh",
-    maxWidth: "100vw",
+    maxWidth: "96vw"
   };
 
   const content_style = {
@@ -23,21 +25,38 @@ function landingPage() {
 
   const Titles = [
     "MALABAR",
+    "NORTH EAST",
     "WESTERN GHATS",
-    "RIVER GANGA",
     "THAR",
     "DECCAN PLATEU",
   ];
-  //   const description = ['WARNING in [eslint]src\Components\landingPage.js Line 20:11:' ,'Titles is assigned a value but never used'];
 
-  const Title = () => {
-    setInterval(() => {
-      Titles.map((page) =>
-        console.log(page)
-    //    <Typography>{page}</Typography>
-    );
-}, 2000);
-  };
+  const description=[
+    "Malabar is a region located in the Western Ghats, renowned for its lush green landscape and serene beauty.",
+    "North East is home to numerous indigenous tribes, each with its own unique colorful festivals.",
+    "The region is blessed by the presence of the majestic River Ganga, which meanders through this land, bringing life and fertility to the area.",
+    "The region is blessed by the presence of the majestic River Ganga, which meanders through this land, bringing life and fertility to the area.",
+    "The region is blessed by the presence of the majestic River Ganga, which meanders through this land, bringing life and fertility to the area.",
+
+  ];
+
+  const cardImages=[
+    "/images/snow-leoperd.jpg",
+    "/images/north_east_india.jpg",
+    "/images/mh.jpg",
+    "/images/vanela.jpg",
+    "/images/jaisalmer.jpg"
+  ];
+
+  const [titleIndex, setTitleIndex] = useState(0);
+  const intervalTime = 5000;
+  useEffect(()=>{
+    const interval = setInterval(() => {
+        setTitleIndex((prevIndex) => (prevIndex + 1) % Titles.length);
+    }, intervalTime);
+    return ()=> clearInterval(interval);
+  });
+
 
   const cards = [1, 2, 3, 4, 5, 6];
 
@@ -69,8 +88,8 @@ function landingPage() {
                     <item>
                       {/* Title */}
                       <Typography variant="h3" sx={{ fontWeight: 900 }}>
-                        MALABAR
-                        {Title}
+                        {/* MALABAR */}
+                        {Titles[titleIndex]}
                       </Typography>
                     </item>
                   </Grid>
@@ -80,22 +99,20 @@ function landingPage() {
                       <Typography
                         sx={{
                           height: "20vh",
-                          width: "30vw",
+                          width: "40vw",
                           textAlign: "justify",
                           fontWeight: "150",
                         }}
                       >
-                        jaksjroewjakfjskalfj iewojfklsdjifeoisjafkldsjafioejakf
-                        ;djsklfjlkasdjfijeijskfjkasdjkhgls
-                        jrieojfkdjfksjdakjteijfksdjfieijawflidsjkfl
+                        {description[titleIndex]}
                       </Typography>
                     </item>
                   </Grid>
                   <Grid item>
                     <item>
                       {/* Button */}
-                      <Button variant="solid" size="lg" color="primary" sx={{}}>
-                        Explore
+                      <Button variant="solid" size="lg" color="primary" sx={{ textDecoration: "none", color: "black", mt:3 }}>
+                      <Link to="/blog" >Explore</Link>
                       </Button>
                     </item>
                   </Grid>
@@ -123,7 +140,9 @@ function landingPage() {
               {cards.map((card) => (
                 <Grid2 key={card} item xs={12} md={6} xl={6}>
                   <item>
-                    <Card image="/images/snow-leoperd.jpg" />
+                    <Link to="/blog">
+                    <Card image={cardImages[titleIndex]} />
+                    </Link>
                   </item>
                 </Grid2>
               ))}
@@ -136,4 +155,4 @@ function landingPage() {
   );
 }
 
-export default landingPage;
+export default LandingPage;

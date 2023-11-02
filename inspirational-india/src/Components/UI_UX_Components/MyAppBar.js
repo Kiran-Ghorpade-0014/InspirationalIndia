@@ -11,12 +11,13 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import { Link } from "react-router-dom";
 
 const pages = ["Explore", "About", "Recommended"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-const choice = ["Login", "Sign Up"];
-const isLogin = true;
-// const isLogin = false;
+const choice = ["SignIn"];
+// const isLogin = true;
+const isLogin = false;
 
 function Appbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -42,26 +43,28 @@ function Appbar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Logo */}
+          <Link to="">
           <Typography
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
               fontWeight: 750,
-              fontSize:30,
+              fontSize: 30,
               letterSpacing: ".3rem",
               color: "white",
               textDecoration: "none",
               flexGrow: 1,
-              textAlign:'center'
+              textAlign: "center"
             }}
           >
-            Inspirational India
+              Inspirational India
           </Typography>
+              </Link>
 
           {/* Navigation Buttons */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -69,9 +72,19 @@ function Appbar() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2,mx: 4,fontWeight:100, color: "white", display: "block" }}
+                sx={{
+                  my: 2,
+                  mx: 4,
+                  fontWeight: 100,
+                  color: "white",
+                  display: "block",
+                }}
               >
-                {page}
+                <Link to={"" + page}>
+                  <Typography sx={{ textDecoration: "none", color: "white" }}>
+                    {page}
+                  </Typography>
+                </Link>
               </Button>
             ))}
           </Box>
@@ -109,13 +122,18 @@ function Appbar() {
             >
               {(isLogin === true ? settings : choice).map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  {/* <Typography textAlign="center">{setting}</Typography> */}
+                  <Link to={"" + setting}>
+                    <Typography sx={{ textDecoration: "none", color: "black" }}>
+                      {setting}
+                    </Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
 
-{/* ----------------------------------------------------------------------------------------------------- */}
+          {/* ----------------------------------------------------------------------------------------------------- */}
           {/* MinWidth Navigation Buttons */}
           <Box
             sx={{
@@ -131,7 +149,7 @@ function Appbar() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon sx={{color: "white"}}/>
+              <MenuIcon sx={{ color: "white" }} />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -153,7 +171,11 @@ function Appbar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography>{page}</Typography>
+                  <Link to={"" + page}>
+                    <Typography sx={{ textDecoration: "none", color: "black" }}>
+                      {page}
+                    </Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -164,7 +186,7 @@ function Appbar() {
             variant="h5"
             Wrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 1,
               display: { xs: "flex", md: "none" },
@@ -175,7 +197,7 @@ function Appbar() {
               letterSpacing: ".3rem",
               color: "white",
               textDecoration: "none",
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
             Inspirational India
@@ -210,7 +232,12 @@ function Appbar() {
             >
               {(isLogin === true ? settings : choice).map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  {/* <Typography textAlign="center">{setting}</Typography> */}
+                  <Link to={""+ setting}>
+                    <Typography sx={{ textDecoration: "none", color: "black" }}>
+                      {setting}
+                    </Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
