@@ -29,27 +29,27 @@ const mainFeaturedPost = {
 
 const featuredPosts = [
   {
-    title: "Featured post",
+    title: "Featured post1",
     date: "Nov 12",
     description:
       "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/random?wallpapers",
+    // image: "https://source.unsplash.com/random?wallpapers",
     imageLabel: "Image Text",
   },
   {
-    title: "Featured post",
+    title: "Featured post2",
     date: "Nov 12",
     description:
       "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/random?wallpapers",
+    // image: "https://source.unsplash.com/random?wallpapers",
     imageLabel: "Image Text",
   },
   {
-    title: "Featured post",
+    title: "Featured post3",
     date: "Nov 12",
     description:
       "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/random?wallpapers",
+    // image: "https://source.unsplash.com/random?wallpapers",
     imageLabel: "Image Text",
   },
 ];
@@ -73,12 +73,15 @@ export default function Blog() {
           alignItems="start"
           justifyContent="center"
           spacing={5}
-          // position="relative"
+
         >
           <Grid item xs={12} md={8} xl={8} 
-          // maxHeight='90vh'
+          height='80vh'
+          overflow='scroll'
           >
-            <main>
+            
+            <main height={{xl:'50vh',md:'50vh', xs:'100vh'}}>
+  
               <MainFeaturedPost post={mainFeaturedPost} />
               <Paper
                 sx={{
@@ -114,12 +117,13 @@ export default function Blog() {
                   </Grid>
                 </Grid>
               </Paper>
-              <Grid container spacing={2}>
+              <Grid container spacing={2} xs={2}>
                 {featuredPosts.map((post) => (
                   <FeaturedPost key={post.title} post={post} />
                 ))}
               </Grid>
             </main>
+            <Footer title="Inspiration India" description="Love India ❤️" sx={{xs:{display:'none'}}}/>
           </Grid>
           <Grid item xs={12} md={4} xl={4}>
             <Paper
@@ -172,7 +176,6 @@ export default function Blog() {
               </Grid>
             </Paper>
           </Grid>
-      <Footer title="Inspiration India" description="Love India ❤️" />
         </Grid>
       </Container>
     </ThemeProvider>
