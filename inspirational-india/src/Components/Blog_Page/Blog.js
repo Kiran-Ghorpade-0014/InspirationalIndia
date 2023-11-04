@@ -75,7 +75,9 @@ export default function Blog() {
           spacing={5}
           // position="relative"
         >
-          <Grid item xs={12} md={8} xl={8} >
+          <Grid item xs={12} md={8} xl={8} 
+          // maxHeight='90vh'
+          >
             <main>
               <MainFeaturedPost post={mainFeaturedPost} />
               <Paper
@@ -131,7 +133,7 @@ export default function Blog() {
                 display:'flex',
                 alignItems:'center',
                 justifyContent:'center',
-                width:{xs:'90vw',xl:'30vw'},
+                width:{xs:'90vw',xl:'30vw', md:'30vw'},
                 border:'5px solid blue'
               }}
             >
@@ -170,9 +172,9 @@ export default function Blog() {
               </Grid>
             </Paper>
           </Grid>
+      <Footer title="Inspiration India" description="Love India ❤️" />
         </Grid>
       </Container>
-      <Footer title="Inspiration India" description="Love India ❤️" />
     </ThemeProvider>
   );
 }

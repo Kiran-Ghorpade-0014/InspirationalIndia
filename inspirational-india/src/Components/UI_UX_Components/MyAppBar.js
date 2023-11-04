@@ -43,10 +43,9 @@ function Appbar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Logo */}
-          <Link to="">
           <Typography
             variant="h5"
-            noWrap
+            // noWrap
             component="a"
             href="/"
             sx={{
@@ -64,7 +63,6 @@ function Appbar() {
           >
               Inspirational India
           </Typography>
-              </Link>
 
           {/* Navigation Buttons */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -98,7 +96,7 @@ function Appbar() {
           >
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 3 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src="#" />
                 <Typography color="white" variant="h6" sx={{ ml: 2 }}>
                   Hello, Sumit!
                 </Typography>
@@ -209,7 +207,7 @@ function Appbar() {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 4 }}>
                 <Avatar
                   alt="Remy Sharp"
-                  src="/static/images/avatar/2.jpg"
+                  src="#"
                   sizes="small"
                 />
               </IconButton>
