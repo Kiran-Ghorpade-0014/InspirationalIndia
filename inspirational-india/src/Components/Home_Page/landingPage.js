@@ -111,8 +111,12 @@ function LandingPage() {
                   <Grid item>
                     <item>
                       {/* Button */}
-                      <Button variant="solid" size="lg" color="primary" sx={{ textDecoration: "none", color: "black", mt:3 }}>
-                      <Link to="/blog" >Explore</Link>
+                      <Button variant="solid" size="lg" color="primary">
+                      <Link to="/blog" >
+                        <Typography  sx={{ textDecoration: "none", color: "white"}}>
+                        Explore
+                        </Typography>
+                      </Link>
                       </Button>
                     </item>
                   </Grid>

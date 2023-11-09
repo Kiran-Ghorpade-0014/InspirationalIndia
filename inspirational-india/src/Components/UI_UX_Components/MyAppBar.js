@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 const pages = ["Explore", "About", "Recommended"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const choice = ["SignIn"];
+const username = "Sumit";
 // const isLogin = true;
 const isLogin = false;
 
@@ -98,7 +99,7 @@ function Appbar() {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 3 }}>
                 <Avatar alt="Remy Sharp" src="#" />
                 <Typography color="white" variant="h6" sx={{ ml: 2 }}>
-                  Hello, Sumit!
+                  {isLogin === true ? "Hello,"+ {username}+"!" : "Sign In"}
                 </Typography>
               </IconButton>
             </Tooltip>

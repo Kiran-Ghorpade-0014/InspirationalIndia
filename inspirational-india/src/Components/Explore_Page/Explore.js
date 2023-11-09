@@ -6,18 +6,20 @@ import {
   Grid,
   List,
   ListItem,
+  ListItemButton,
   ListSubheader,
   Paper,
 } from "@mui/material";
-// import { ThemeProvider } from '@emotion/react';
 import Card from "../Home_Page/Card";
 import { Link } from "react-router-dom";
+import { ListDivider } from "@mui/joy";
 
 // function preventDefault(event) {
 //   event.preventDefault();
 // }
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8];
+const regions = ["Himalaya", "Deccan", "Malabar", "NorthEast", "hello"];
 
 export default function Explore() {
   return (
@@ -48,28 +50,23 @@ export default function Explore() {
                     bgcolor: "#0f2027",
                     height: "85vh",
                     width: "350px",
-                    overflow:'scroll'
+                    overflow: "scroll",
                   }}
                 >
-                  <Typography color="white">
-                    <List>
-                      <ListSubheader>Himalayan</ListSubheader>
-                            <ListItem>Himalayan</ListItem>
-                            <ListItem>Himalayan</ListItem>
-                      <ListSubheader>NorthEastern Region</ListSubheader>
-                            <ListItem>Himalayan</ListItem>
-                            <ListItem>Himalayan</ListItem>
-                      <ListSubheader>Gangetic Plains</ListSubheader>
-                            <ListItem>Himalayan</ListItem>
-                            <ListItem>Himalayan</ListItem>
-                      <ListSubheader>Konkan</ListSubheader>
-                            <ListItem>Himalayan</ListItem>
-                            <ListItem>Himalayan</ListItem>
-                      <ListSubheader>Deccan</ListSubheader>
-                            <ListItem>Himalayan</ListItem>
-                            <ListItem>Himalayan</ListItem>
-                    </List>
-                  </Typography>
+                  <List>
+                    {regions.map((region) => (
+                      <>
+                        <ListItemButton>
+                          <Link to="#">
+                            <Typography sx={{ color: "white" }}>
+                              {region}
+                            </Typography>
+                          </Link>
+                        </ListItemButton>
+                        <ListDivider sx={{ bgcolor: "white" }} />
+                      </>
+                    ))}
+                  </List>
                 </Paper>
               </Grid>
 
@@ -112,9 +109,9 @@ export default function Explore() {
                           <Grid key={card} item xs={12} md={3} xl={3}>
                             <item>
                               <Link to="/blog">
-                              <Card
-                                image="/images/jaisalmer.jpg"
-                                sx={{ md: "10px" }}
+                                <Card
+                                  image="/images/jaisalmer.jpg"
+                                  sx={{ md: "10px" }}
                                 />
                               </Link>
                             </item>

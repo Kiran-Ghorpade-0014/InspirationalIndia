@@ -10,16 +10,14 @@ import Explore from "../Explore_Page/Explore";
 
 import {
   BrowserRouter as Router,
-  //   Switch,
   Route,
   Routes,
-  // Link
 } from "react-router-dom";
 
 function Home() {
   const style = {
     backgroundColor: "#264651",
-    overflow: "scroll",
+    overflowY: "scroll",
     height: "100vh",
     width: "100vw",
     display: "flex",
@@ -45,8 +43,6 @@ function Home() {
               <Route path="/blog" element={<Blog />} />
             </Routes>
           </div>
-
-          {/* <Footer color="white"/> */}
         </div>
       </Router>
     </>

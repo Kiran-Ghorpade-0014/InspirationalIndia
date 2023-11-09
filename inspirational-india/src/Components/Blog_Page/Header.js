@@ -32,7 +32,7 @@ function Header(props) {
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'white' ,color:'white'}}>
-        <Button size="large" variant='outlined' onClick={likeHandler}>{like.icon} {like.likeCount}</Button>
+        <Button size="large" variant='outlined' sx={{color:'white', borderColor:'white'}} onClick={likeHandler}>{like.icon} {like.likeCount}</Button>
         <Typography
           component="h2"
           variant="h5"
