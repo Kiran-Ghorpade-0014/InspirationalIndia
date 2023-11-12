@@ -7,10 +7,10 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Deposits() {
+export default function ManageUsers() {
   return (
     <React.Fragment>
-      <Title>Recent Deposits</Title>
+      <Title>Manage Users</Title>
       <Typography component="p" variant="h4">
         $3,024.00
       </Typography>
