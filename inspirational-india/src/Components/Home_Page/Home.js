@@ -2,9 +2,9 @@ import Appbar from "../UI_UX_Components/MyAppBar";
 import LandingPage from "../Home_Page/LandingPage";
 import Blog from "../Blog_Page/Blog";
 import Dashboard from "../Admin_Dashboard/Dashboard";
-import SignIn from "../Admin_SignIn_Page/AdminSignIn";
-import UserSignIn from "../User_SignIn_Page/SignIn";
-import Registration from "../User_Registration/Registration";
+import SignIn from "../SignIn_Page/AdminSignIn";
+import UserSignIn from "../SignIn_Page/SignIn";
+import Registration from "../SignIn_Page/Registration";
 import Recommended from "../Recommended_Page/Recommended_page";
 import Explore from "../Explore_Page/Explore";
 
@@ -13,6 +13,9 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import AddNewBlog from "../Admin_Dashboard/AddNewBlog";
+import AddNewTribe from "../Admin_Dashboard/AddNewTribe";
+import AddNewRegion from "../Admin_Dashboard/AddNewRegion";
 
 function Home() {
   const style = {
@@ -41,6 +44,9 @@ function Home() {
               <Route path="/registration" element={<Registration />} />
               <Route path="/recommended" element={<Recommended />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/add/blog" element={<AddNewBlog />} />
+              <Route path="/add/region" element={<AddNewRegion />} />
+              <Route path="/add/tribe" element={<AddNewTribe />} />
             </Routes>
           </div>
         </div>

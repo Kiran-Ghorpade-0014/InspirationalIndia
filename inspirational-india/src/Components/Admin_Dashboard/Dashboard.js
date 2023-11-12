@@ -2,9 +2,8 @@ import * as React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import BlogCreator from './BlogCreator';
+import { Avatar, Button, Typography } from '@mui/material';
+import { DashboardOutlined } from '@mui/icons-material';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
 
@@ -15,56 +14,59 @@ const defaultTheme = createTheme();
 export default function Dashboard() {
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Box sx={{ display: 'flex' }}>  
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            overflow: 'auto'
-          }}
-        >
-          <Container maxWidth="lg" sx={{ mb: 0 }}>
-            <Grid container spacing={3}>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={8}>
-                <Paper
-                  sx={{
-                    mt:5,
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 550,
-                  }}
-                >
-                  <BlogCreator />
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={4}>
-                <Paper
-                  sx={{
-                    mt:5,
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 550,
-                  }}
-                >
-                  {/* <Deposits /> */}
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              {/* <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
-              </Grid> */}
-            </Grid>
-          </Container>
-          {/* <Footer color='black'/> */}
+    <ThemeProvider theme={defaultTheme} >
+    <Container component="main" maxWidth="xs" sx={{backgroundColor:'#ffffff'}}>
+      {/* <CssBaseline /> */}
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <DashboardOutlined/>
+        </Avatar>
+        <Typography component="h1" variant="h5" color={'success'}>
+         Dashboard
+        </Typography>
+        <Box  noValidate sx={{ mt: 1 }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3 }}
+          >
+            Manage Blogs
+          </Button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3 }}
+          >
+            Manage Regions
+          </Button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3}}
+          >
+            Manage Tribes
+          </Button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 5 }}
+          >
+            Manage Users
+          </Button>
         </Box>
       </Box>
-    </ThemeProvider>
+    </Container>
+  </ThemeProvider>
   );
 }

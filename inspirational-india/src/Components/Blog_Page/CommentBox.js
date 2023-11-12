@@ -27,18 +27,17 @@ function CommentBox() {
             width: { xs: "90vw", xl: "30vw", md: "30vw" },
           }}
         >
-          <Grid item md={12}>
+          <Grid item md={12} sx={{ overflow: "scroll", overflowY: "none" }}>
             <Box
               sx={{
-                position: "relative",
+                // position: "relative",
                 p: { xs: 3, md: 6 },
-                height: "60vh",
+                height: "50vh",
                 // width: "100vw"
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "end",
                 alignItems: "start",
-                overflow: "hidden",
               }}
             >
               <Message />
@@ -57,29 +56,33 @@ function CommentBox() {
               <Typography>😍😍😍</Typography>
             </Box>
           </Grid>
-          <Grid item>
-            <TextField
-              margin="normal"
-              id="comment"
-              label="comment"
-              name="text"
-              autoFocus
-              sx={{
-                bgcolor: "white",
-                width: { xl: "50%", xs: "50%", md: "50%" },
-                // mb: 2,
-                mt: 0,
-                ml: 5,
-              }}
-            />
-            <Button
-              size="large"
-              variant="contained"
-              sx={{ mb: 2, ml: 5 }}
-              href="#"
-            >
-              Send
-            </Button>
+          <Grid item xs={12}>
+            <Grid container>
+              <Grid item xl={8}>
+                <TextField
+                  sx={{
+                    bgcolor: "white",
+                    ml: 5,
+                  }}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="comment"
+                  label="Comment"
+                  name="comment"
+                />
+              </Grid>
+              <Grid item xl={4}>
+                <Button
+                  size="large"
+                  variant="contained"
+                  sx={{ mb: 2, ml: 5 }}
+                  href="#"
+                >
+                  Send
+                </Button>
+              </Grid>
+            </Grid>
           </Grid>
         </Paper>
       </Grid>
