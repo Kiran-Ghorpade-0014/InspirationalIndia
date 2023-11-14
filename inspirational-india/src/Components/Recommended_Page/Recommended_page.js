@@ -2,7 +2,7 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import { Box, Container, Grid, Paper } from "@mui/material";
 import Card from "../Home_Page/Card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // function preventDefault(event) {
 //   event.preventDefault();
@@ -11,6 +11,14 @@ import { Link } from "react-router-dom";
 const cards = [1, 2, 3, 4, 5, 6,7,8];
 
 export default function Recommended() {
+
+  const navigate = useNavigate();
+
+  if(sessionStorage.getItem("userType") === 'null'){
+      navigate("/signin");
+      return;
+  }
+
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -39,7 +47,7 @@ export default function Recommended() {
                     bgcolor: "#0f2027",
                   }}
                 >
-                  <React.Fragment sx={{ bgcolor: "white" }}>
+                  <React.Fragment>
                     <Typography
                       component="h1"
                       variant="h5"

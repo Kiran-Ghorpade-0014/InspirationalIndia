@@ -14,19 +14,26 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 
 const pages = ["Explore", "About", "Recommended"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["SignOut"];
 const choice = ["SignIn"];
-let username = "Sumit";
-// const isLogin = true;
 let isLogin = false;
 
-function Appbar() {
+export default function MyAppBar() {
+  let username = "";
 
-  if(sessionStorage.getItem("userType") === "USER"){
-    isLogin = true;
-    username = sessionStorage.getItem("username");
+  function updateUsername() {
+    if (sessionStorage.getItem("userType") === "USER") {
+      isLogin = true;
+      username = sessionStorage.getItem("username");
+      // setUsername(sessionStorage.getItem("username"));
+    } else if (sessionStorage.getItem("userType") === "ADMIN") {
+      isLogin = true;
+      username = "ADMIN";
+      settings.push("Dashboard");
+    } else {
+      isLogin = false;
+    }
   }
-
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -47,6 +54,7 @@ function Appbar() {
 
   return (
     <AppBar position="static" sx={{ boxShadow: 0 }} color="transparent">
+      {updateUsername()}
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Logo */}
@@ -65,10 +73,10 @@ function Appbar() {
               color: "white",
               textDecoration: "none",
               flexGrow: 1,
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
-              Inspirational India
+            Inspirational India
           </Typography>
 
           {/* Navigation Buttons */}
@@ -105,7 +113,7 @@ function Appbar() {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 3 }}>
                 <Avatar alt="Remy Sharp" src="#" />
                 <Typography color="white" variant="h6" sx={{ ml: 2 }}>
-                  {isLogin === true ? "Hello,"+ {username}+"!" : "Sign In"}
+                  {isLogin === true ? "Hello," + { username } + "!" : "Sign In"}
                 </Typography>
               </IconButton>
             </Tooltip>
@@ -212,11 +220,7 @@ function Appbar() {
           <Box sx={{ flexShrink: 2, display: { xs: "flex", md: "none" } }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 4 }}>
-                <Avatar
-                  alt="Remy Sharp"
-                  src="#"
-                  sizes="small"
-                />
+                <Avatar alt="Remy Sharp" src="#" sizes="small" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -238,7 +242,7 @@ function Appbar() {
               {(isLogin === true ? settings : choice).map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   {/* <Typography textAlign="center">{setting}</Typography> */}
-                  <Link to={""+ setting}>
+                  <Link to={"" + setting}>
                     <Typography sx={{ textDecoration: "none", color: "black" }}>
                       {setting}
                     </Typography>
@@ -252,4 +256,3 @@ function Appbar() {
     </AppBar>
   );
 }
-export default Appbar;

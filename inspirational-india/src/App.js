@@ -6,7 +6,8 @@ import Home from './Components/Home_Page/Home';
 
 function App() {
   useEffect(()=>{
-      sessionStorage.setItem("userType","null")
+      sessionStorage.setItem("userType",null);
+      sessionStorage.setItem("username",null);
   });
   return (
     <>

@@ -33,19 +33,15 @@ export default function SignIn() {
     })
       .then(response => response.json())
       .then(response => {
-        if (response.status === 200){
-          alert("Login Successfull...");
+          if(response === undefined)
+            alert("Login Failed")
           sessionStorage.setItem("userType","USER");
-          console.log(response);
-          sessionStorage.setItem("username", +  response.username);                                       
-          // return <LandingPage/>;
+          alert("Login Successfull.")
+          sessionStorage.setItem("username",response.username.toString());                                       
           navigate("/");
-        }
-        else if(response.status === 401) alert("Hey man ! \n Register first .")
-        else alert("something went wrong... sorry.")
       })
       .catch((e) => {
-        alert("Exception Ocurred.");
+        alert("Login Failed.");
         console.log(e);
       });
   };

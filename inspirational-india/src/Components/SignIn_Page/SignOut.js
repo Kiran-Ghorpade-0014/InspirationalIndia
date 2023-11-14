@@ -3,18 +3,17 @@ import { useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-export default function signout() {
+export default function SignOut() {
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
+  React.useEffect(() => {
           sessionStorage.setItem("userType", null);
-          sessionStorage.setItem("username", null)
-          navigate("/user/signin");
-  };
+          sessionStorage.setItem("username", null);
+          navigate("/signin");
+  });
 
   return (
         <>
-            {handleSubmit}
         </>
   );
 }
