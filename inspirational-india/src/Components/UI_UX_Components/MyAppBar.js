@@ -16,11 +16,17 @@ import { Link } from "react-router-dom";
 const pages = ["Explore", "About", "Recommended"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const choice = ["SignIn"];
-const username = "Sumit";
+let username = "Sumit";
 // const isLogin = true;
-const isLogin = false;
+let isLogin = false;
 
 function Appbar() {
+
+  if(sessionStorage.getItem("userType") === "USER"){
+    isLogin = true;
+    username = sessionStorage.getItem("username");
+  }
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -122,7 +128,7 @@ function Appbar() {
               {(isLogin === true ? settings : choice).map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   {/* <Typography textAlign="center">{setting}</Typography> */}
-                  <Link to={"" + setting}>
+                  <Link to={"user/" + setting}>
                     <Typography sx={{ textDecoration: "none", color: "black" }}>
                       {setting}
                     </Typography>

@@ -16,6 +16,7 @@ import {
 import AddNewBlog from "../Admin_Dashboard/AddNewBlog";
 import AddNewTribe from "../Admin_Dashboard/AddNewTribe";
 import AddNewRegion from "../Admin_Dashboard/AddNewRegion";
+import SignOut from "../SignIn_Page/SignOut";
 
 function Home() {
   const style = {
@@ -37,16 +38,17 @@ function Home() {
           <div>
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="/explore" element={<Explore />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/signin" element={<UserSignIn />} />
-              <Route path="/adminsignin" element={<SignIn />} />
-              <Route path="/registration" element={<Registration />} />
               <Route path="/recommended" element={<Recommended />} />
               <Route path="/blog" element={<Blog />} />
-              <Route path="/add/blog" element={<AddNewBlog />} />
-              <Route path="/add/region" element={<AddNewRegion />} />
-              <Route path="/add/tribe" element={<AddNewTribe />} />
+              <Route path="/explore" element={<Explore />} />
+              <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route path="/admin/signin" element={<SignIn />} />
+              <Route path="/signin" element={<UserSignIn />} />
+              <Route path="/signout" element={<SignOut/>} />
+              <Route path="/registration" element={<Registration />} />
+              <Route path="/manage/blog" element={<AddNewBlog />} />
+              <Route path="/manage/region" element={<AddNewRegion />} />
+              <Route path="/manage/tribe" element={<AddNewTribe />} />
             </Routes>
           </div>
         </div>

@@ -1,59 +1,93 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Footer from '../UI_UX_Components/Footer';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Footer from "../UI_UX_Components/Footer";
+import { useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
+    console.log("form submitted...");
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const userDetails = { username, password };
+    fetch("http://localhost:8181/v1/user/authentication", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userDetails),
+    })
+      .then(response => response.json())
+      .then(response => {
+        if (response.status === 200){
+          alert("Login Successfull...");
+          sessionStorage.setItem("userType","USER");
+          console.log(response);
+          sessionStorage.setItem("username", +  response.username);                                       
+          // return <LandingPage/>;
+          navigate("/");
+        }
+        else if(response.status === 401) alert("Hey man ! \n Register first .")
+        else alert("something went wrong... sorry.")
+      })
+      .catch((e) => {
+        alert("Exception Ocurred.");
+        console.log(e);
+      });
   };
 
   return (
-    <ThemeProvider theme={defaultTheme} >
-      <Container component="main" maxWidth="xs" sx={{backgroundColor:'#ffffff'}}>
+    <ThemeProvider theme={defaultTheme}>
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{ backgroundColor: "#ffffff" }}
+      >
         <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5" color={'success'}>
+          <Typography component="h1" variant="h5" color="primary.success">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="User Name"
+              name="username"
+              autoComplete="username"
               autoFocus
+              onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -64,6 +98,7 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Button
               type="submit"
@@ -80,11 +115,9 @@ export default function SignIn() {
               sx={{ mb: 2 }}
               href="/adminsignin"
             >
-              <Typography>
-              Admin Login
-              </Typography>
+              <Typography>Admin Login</Typography>
             </Button>
-            <Grid container sx={{mb: 4}}>
+            <Grid container sx={{ mb: 4 }}>
               {/* <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
@@ -99,7 +132,7 @@ export default function SignIn() {
           </Box>
         </Box>
       </Container>
-      <Footer color="white"/>
+      <Footer color="white" />
     </ThemeProvider>
   );
 }

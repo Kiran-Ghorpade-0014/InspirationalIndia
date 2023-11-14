@@ -6,21 +6,24 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Footer from "../UI_UX_Components/Footer";
 import { NewReleasesOutlined } from "@mui/icons-material";
 import {
-    Box,
-    Container,
-    Grid,
-    List,
-    ListItemButton,
-    Paper,
-    Typography,
-    TextField
-  } from "@mui/material";
+  Box,
+  Container,
+  Grid,
+  List,
+  ListItemButton,
+  Paper,
+  Typography,
+  TextField,
+  MenuItem,
+  Select,
+} from "@mui/material";
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 const regions = ["Himalaya", "Deccan", "Malabar", "NorthEast", "hello"];
 
 export default function AddNewTribe() {
+  const [tribe, setTribe] = React.useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -90,14 +93,19 @@ export default function AddNewTribe() {
                           name="text"
                           autoFocus
                         />
-                        <TextField
+                        <Select
                           margin="normal"
-                          required
+                          className="form-control"
+                          value={tribe}
+                          onChange={(e) => setTribe(e.target.value)}
                           fullWidth
-                          id="select_region"
-                          label="Select Region "
-                          name="SelectRegion"
-                        />
+                          sx={{ mt: 1 }}
+                        >
+                          <MenuItem value="">-- Select Region --</MenuItem>
+                          <MenuItem value="Open">Open</MenuItem>
+                          <MenuItem value="Pending">Pending</MenuItem>
+                          <MenuItem value="Completed">Completed</MenuItem>
+                        </Select>
                         <TextField
                           margin="normal"
                           required

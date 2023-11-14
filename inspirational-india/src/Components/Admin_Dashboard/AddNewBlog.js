@@ -13,7 +13,9 @@ import {
   ListItemButton,
   Paper,
   Typography,
-  TextField
+  TextField,
+  Select,
+  MenuItem,
 } from "@mui/material";
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -21,6 +23,11 @@ const defaultTheme = createTheme();
 const regions = ["Himalaya", "Deccan", "Malabar", "NorthEast", "hello"];
 
 export default function AddNewBlog() {
+
+  const [region, setRegion] = React.useState("");
+  const [tribe, setTribe] = React.useState("");
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -90,22 +97,32 @@ export default function AddNewBlog() {
                           name="text"
                           autoFocus
                         />
-                        <TextField
+                        <Select
                           margin="normal"
-                          required
+                          className="form-control"
+                          value={region}
+                          onChange={(e) => setRegion(e.target.value)}
                           fullWidth
-                          id="select_region"
-                          label="Select Region "
-                          name="SelectRegion"
-                        />
-                        <TextField
+                          sx={{ mt: 1 }}
+                        >
+                          <MenuItem value="">-- Select Region --</MenuItem>
+                          <MenuItem value="Open">Open</MenuItem>
+                          <MenuItem value="Pending">Pending</MenuItem>
+                          <MenuItem value="Completed">Completed</MenuItem>
+                        </Select>
+                        <Select
                           margin="normal"
-                          required
+                          className="form-control"
+                          value={tribe}
+                          onChange={(e) => setTribe(e.target.value)}
                           fullWidth
-                          name="select_tribe"
-                          label="Select Tribe"
-                          id="select_tribe"
-                        />
+                          sx={{ mt: 1}}
+                        >
+                          <MenuItem value="">-- Select Region --</MenuItem>
+                          <MenuItem value="Open">Open</MenuItem>
+                          <MenuItem value="Pending">Pending</MenuItem>
+                          <MenuItem value="Completed">Completed</MenuItem>
+                        </Select>
                         <TextField
                           margin="normal"
                           required
@@ -119,7 +136,7 @@ export default function AddNewBlog() {
                           type="Register"
                           fullWidth
                           variant="contained"
-                          sx={{ mt: 3, mb: 2 }}
+                          sx={{ mt: 1, mb: 2 }}
                           href="#"
                         >
                           Publish
@@ -162,16 +179,16 @@ export default function AddNewBlog() {
                   mt: 3,
                 }}
               >
-                <Typography  component="h1" variant="h5" color="white">
+                <Typography component="h1" variant="h5" color="white">
                   Blog List :
-                  <hr/>
+                  <hr />
                 </Typography>
                 <List>
                   {regions.map((region) => (
                     <>
                       <ListItemButton>
                         <Typography sx={{ color: "white" }}>
-                          {regions.indexOf(region)+1+'. '+region}
+                          {regions.indexOf(region) + 1 + ". " + region}
                         </Typography>
                       </ListItemButton>
                       {/* <ListDivider sx={{ bgcolor: "white" }} /> */}

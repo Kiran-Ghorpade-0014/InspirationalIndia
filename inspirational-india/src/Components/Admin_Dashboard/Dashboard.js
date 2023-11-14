@@ -37,6 +37,7 @@ export default function Dashboard() {
             fullWidth
             variant="contained"
             sx={{ mt: 3 }}
+            href="/manage/blog"
           >
             Manage Blogs
           </Button>
@@ -45,6 +46,7 @@ export default function Dashboard() {
             fullWidth
             variant="contained"
             sx={{ mt: 3 }}
+            href="/manage/region"
           >
             Manage Regions
           </Button>
@@ -53,6 +55,7 @@ export default function Dashboard() {
             fullWidth
             variant="contained"
             sx={{ mt: 3}}
+            href="/manage/tribe"
           >
             Manage Tribes
           </Button>
@@ -61,6 +64,7 @@ export default function Dashboard() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 5 }}
+            href="/manage/user"
           >
             Manage Users
           </Button>

@@ -13,8 +13,11 @@ import {
   Grid,
   List,
   ListItemButton,
+  MenuItem,
   Paper,
+  Select,
 } from "@mui/material";
+// import { Option } from "@mui/joy";
 // import { Link } from "react-router-dom";
 // import { ListDivider } from "@mui/joy";
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -23,6 +26,8 @@ const defaultTheme = createTheme();
 const regions = ["Himalaya", "Deccan", "Malabar", "NorthEast", "hello"];
 
 export default function AddNewRegion() {
+  const [region, setRegion] = React.useState("");
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -91,14 +96,17 @@ export default function AddNewRegion() {
                           name="text"
                           autoFocus
                         />
-                        <TextField
-                          margin="normal"
-                          required
+                        <Select
+                          className="form-control"
+                          value={region}
+                          onChange={(e) => setRegion(e.target.value)}
                           fullWidth
-                          id="select_region"
-                          label="Select Region "
-                          name="SelectRegion"
-                        />
+                        >
+                          <MenuItem value="">-- Select Region --</MenuItem>
+                          <MenuItem value="Open">Open</MenuItem>
+                          <MenuItem value="Pending">Pending</MenuItem>
+                          <MenuItem value="Completed">Completed</MenuItem>
+                        </Select>
                         <TextField
                           margin="normal"
                           required
