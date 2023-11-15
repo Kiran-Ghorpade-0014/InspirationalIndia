@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 
 const pages = ["Explore", "About", "Recommended"];
-const settings = ["SignOut"];
+let settings = ["SignOut"];
 const choice = ["SignIn"];
 let isLogin = false;
 
@@ -29,7 +29,7 @@ export default function MyAppBar() {
     } else if (sessionStorage.getItem("userType") === "ADMIN") {
       isLogin = true;
       username = "ADMIN";
-      settings.push("Dashboard");
+      settings= ["Dashboard","SignOut"]
     } else {
       isLogin = false;
     }

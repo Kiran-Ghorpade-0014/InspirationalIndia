@@ -26,15 +26,28 @@ export default function AddNewBlog() {
 
   const [region, setRegion] = React.useState("");
   const [tribe, setTribe] = React.useState("");
-
-
+  const [blogTitle, setBlogTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  
   const handleSubmit = (event) => {
+    console.log("form submitted...");
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const tribeDetails = { blogTitle, region, tribe, description};
+    fetch("http://localhost:8181/v1/tribe/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(tribeDetails),
+    })
+      .then(response => response.json())
+      .then(response => {
+          if(response === undefined)
+            alert("Serve error \n try After some time")
+          alert("New Blog Added.")
+      })
+      .catch((e) => {
+        alert("Cannot able to add new Blog");
+        console.log(e);
+      });
   };
 
   return (
@@ -79,7 +92,7 @@ export default function AddNewBlog() {
                         {/* <LockOutlinedIcon /> */}
                         <NewReleasesOutlined />
                       </Avatar>
-                      <Typography component="h1" variant="h5" color={"success"}>
+                      <Typography component="h1" variant="h5" color={"primary.success"}>
                         Publish New Blog
                       </Typography>
                       <Box
@@ -96,6 +109,7 @@ export default function AddNewBlog() {
                           label="Blog Title"
                           name="text"
                           autoFocus
+                          onChange={(e) => setBlogTitle(e.target.value)}
                         />
                         <Select
                           margin="normal"
@@ -118,7 +132,7 @@ export default function AddNewBlog() {
                           fullWidth
                           sx={{ mt: 1}}
                         >
-                          <MenuItem value="">-- Select Region --</MenuItem>
+                          <MenuItem value="">-- Select Tribe --</MenuItem>
                           <MenuItem value="Open">Open</MenuItem>
                           <MenuItem value="Pending">Pending</MenuItem>
                           <MenuItem value="Completed">Completed</MenuItem>
@@ -131,22 +145,21 @@ export default function AddNewBlog() {
                           label="Blog Text"
                           id="description"
                           multiline
+                          onChange={(e) => setDescription(e.target.value)}
                         />
-                        <Button
-                          type="Register"
-                          fullWidth
-                          variant="contained"
-                          sx={{ mt: 1, mb: 2 }}
-                          href="#"
-                        >
-                          Publish
-                        </Button>
                         <Button
                           type="submit"
                           fullWidth
                           variant="contained"
+                          sx={{ mt: 1, mb: 2 }}
+                        >
+                          Publish
+                        </Button>
+                        <Button
+                          fullWidth
+                          variant="contained"
                           sx={{ mb: 2 }}
-                          href="/"
+                          href="/dashboard"
                         >
                           Cancel
                         </Button>

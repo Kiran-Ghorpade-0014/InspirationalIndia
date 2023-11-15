@@ -13,9 +13,7 @@ import {
   Grid,
   List,
   ListItemButton,
-  MenuItem,
   Paper,
-  Select,
 } from "@mui/material";
 // import { Option } from "@mui/joy";
 // import { Link } from "react-router-dom";
@@ -26,15 +24,28 @@ const defaultTheme = createTheme();
 const regions = ["Himalaya", "Deccan", "Malabar", "NorthEast", "hello"];
 
 export default function AddNewRegion() {
-  const [region, setRegion] = React.useState("");
+  const [region_name, setRegionName] = React.useState("");
+  const [description, setDescription] = React.useState("");
   
   const handleSubmit = (event) => {
+    console.log("form submitted...");
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const regionDetails = { region_name, description};
+    fetch("http://localhost:8181/v1/region/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(regionDetails),
+    })
+      .then(response => response.json())
+      .then(response => {
+          if(response === undefined)
+            alert("Serve error \n try After some time")
+          alert("New Region Added.")
+      })
+      .catch((e) => {
+        alert("Cannot able to add new region");
+        console.log(e);
+      });
   };
 
   return (
@@ -78,8 +89,8 @@ export default function AddNewRegion() {
                       <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
                         <NewReleasesOutlined />
                       </Avatar>
-                      <Typography component="h1" variant="h5" color={"success"}>
-                        Add New Tribe
+                      <Typography component="h1" variant="h5" color={"primary.success"}>
+                        Add New Region
                       </Typography>
                       <Box
                         component="form"
@@ -91,12 +102,13 @@ export default function AddNewRegion() {
                           margin="normal"
                           required
                           fullWidth
-                          id="tribe_name"
-                          label="Tribe Name"
+                          id="region_name"
+                          label="Region Name"
                           name="text"
                           autoFocus
+                          onChange={(e) => setRegionName(e.target.value)}
                         />
-                        <Select
+                        {/* <Select
                           className="form-control"
                           value={region}
                           onChange={(e) => setRegion(e.target.value)}
@@ -106,7 +118,7 @@ export default function AddNewRegion() {
                           <MenuItem value="Open">Open</MenuItem>
                           <MenuItem value="Pending">Pending</MenuItem>
                           <MenuItem value="Completed">Completed</MenuItem>
-                        </Select>
+                        </Select> */}
                         <TextField
                           margin="normal"
                           required
@@ -115,22 +127,21 @@ export default function AddNewRegion() {
                           label="Description"
                           id="description"
                           multiline
+                          onChange={(e) => setDescription(e.target.value)}
                         />
-                        <Button
-                          type="Register"
-                          fullWidth
-                          variant="contained"
-                          sx={{ mt: 3, mb: 2 }}
-                          href="#"
-                        >
-                          Add
-                        </Button>
                         <Button
                           type="submit"
                           fullWidth
                           variant="contained"
+                          sx={{ mt: 3, mb: 2 }}
+                        >
+                          Add
+                        </Button>
+                        <Button
+                          fullWidth
+                          variant="contained"
                           sx={{ mb: 2 }}
-                          href="/"
+                          href="/dashboard"
                         >
                           Cancel
                         </Button>

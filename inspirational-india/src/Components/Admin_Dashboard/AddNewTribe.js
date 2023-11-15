@@ -23,14 +23,29 @@ const defaultTheme = createTheme();
 const regions = ["Himalaya", "Deccan", "Malabar", "NorthEast", "hello"];
 
 export default function AddNewTribe() {
-  const [tribe, setTribe] = React.useState("");
+  const [tribe_name, setTribeName] = React.useState("");
+  const [region, setRegion] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  
   const handleSubmit = (event) => {
+    console.log("form submitted...");
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const tribeDetails = { tribe_name, region, description};
+    fetch("http://localhost:8181/v1/tribe/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(tribeDetails),
+    })
+      .then(response => response.json())
+      .then(response => {
+          if(response === undefined)
+            alert("Serve error \n try After some time")
+          alert("New Tribe Added.")
+      })
+      .catch((e) => {
+        alert("Cannot able to add new Tribe");
+        console.log(e);
+      });
   };
 
   return (
@@ -75,7 +90,7 @@ export default function AddNewTribe() {
                         {/* <LockOutlinedIcon /> */}
                         <NewReleasesOutlined />
                       </Avatar>
-                      <Typography component="h1" variant="h5" color={"success"}>
+                      <Typography component="h1" variant="h5" color={"primary.success"}>
                         Add New Tribe
                       </Typography>
                       <Box
@@ -92,12 +107,13 @@ export default function AddNewTribe() {
                           label="Tribe Name"
                           name="text"
                           autoFocus
+                          onChange={(e) => setTribeName(e.target.value)}
                         />
                         <Select
                           margin="normal"
                           className="form-control"
-                          value={tribe}
-                          onChange={(e) => setTribe(e.target.value)}
+                          value={region}
+                          onChange={(e) => setRegion(e.target.value)}
                           fullWidth
                           sx={{ mt: 1 }}
                         >
@@ -114,22 +130,21 @@ export default function AddNewTribe() {
                           label="Description"
                           id="description"
                           multiline
+                          onChange={(e) => setDescription(e.target.value)}
                         />
-                        <Button
-                          type="Register"
-                          fullWidth
-                          variant="contained"
-                          sx={{ mt: 3, mb: 2 }}
-                          href="#"
-                        >
-                          Add
-                        </Button>
                         <Button
                           type="submit"
                           fullWidth
                           variant="contained"
+                          sx={{ mt: 3, mb: 2 }}
+                        >
+                          Add
+                        </Button>
+                        <Button
+                          fullWidth
+                          variant="contained"
                           sx={{ mb: 2 }}
-                          href="/"
+                          href="/dashboard"
                         >
                           Cancel
                         </Button>

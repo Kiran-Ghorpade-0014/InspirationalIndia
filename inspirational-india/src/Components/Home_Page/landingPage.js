@@ -112,7 +112,7 @@ function LandingPage() {
                     <item>
                       {/* Button */}
                       <Button variant="solid" size="lg" color="primary">
-                      <Link to="/blog" >
+                      <Link to="/explore" >
                         <Typography  sx={{ textDecoration: "none", color: "white"}}>
                         Explore
                         </Typography>

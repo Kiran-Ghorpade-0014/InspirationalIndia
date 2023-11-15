@@ -41,7 +41,7 @@ function Home() {
               <Route path="/recommended" element={<Recommended />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/explore" element={<Explore />} />
-              <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin/signin" element={<SignIn />} />
               <Route path="/signin" element={<UserSignIn />} />
               <Route path="/signout" element={<SignOut/>} />
