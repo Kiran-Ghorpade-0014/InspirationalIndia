@@ -109,7 +109,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mb: 2 }}
-              href="/adminsignin"
+              href="/admin/signin"
             >
               <Typography>Admin Login</Typography>
             </Button>

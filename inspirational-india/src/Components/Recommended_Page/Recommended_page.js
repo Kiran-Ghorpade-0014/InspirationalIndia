@@ -8,15 +8,29 @@ import { Link, useNavigate } from "react-router-dom";
 //   event.preventDefault();
 // }
 
-const cards = [1, 2, 3, 4, 5, 6,7,8];
+const cards = [1, 2, 3, 4, 5, 6, 7, 8];
 
 export default function Recommended() {
-
   const navigate = useNavigate();
 
-  if(sessionStorage.getItem("userType") === 'null'){
-      navigate("/signin");
-      return;
+  if (sessionStorage.getItem("userType") === "null") {
+    navigate("/signin");
+    return(
+    <>
+    <Container
+      sx={{
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+        height:'80vh'
+      }}
+    >
+    <Typography color='white'>
+    Sign In to access this Content
+    </Typography>
+    </Container>
+    </>
+    );
   }
 
   return (
@@ -26,15 +40,12 @@ export default function Recommended() {
           component="main"
           sx={{
             flexGrow: 1,
-            overflow: "auto"
+            overflow: "auto",
             // height:'100vh'
           }}
         >
           <Container maxWidth="lg" sx={{ mb: 0 }}>
-            <Grid
-              container
-              spacing={4}
-            >
+            <Grid container spacing={4}>
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper
@@ -42,8 +53,8 @@ export default function Recommended() {
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent:'center',
-                    alignItems:'center',
+                    justifyContent: "center",
+                    alignItems: "center",
                     bgcolor: "#0f2027",
                   }}
                 >
@@ -51,8 +62,8 @@ export default function Recommended() {
                     <Typography
                       component="h1"
                       variant="h5"
-                      pd='5'
-                      fontWeight='500'
+                      pd="5"
+                      fontWeight="500"
                       color="White"
                       gutterBottom
                     >
@@ -72,7 +83,10 @@ export default function Recommended() {
                           <Grid key={card} item xs={12} md={3} xl={3}>
                             <item>
                               <Link to="/blog">
-                              <Card image="/images/jaisalmer.jpg" sx={{md:'10px'}}/>
+                                <Card
+                                  image="/images/jaisalmer.jpg"
+                                  sx={{ md: "10px" }}
+                                />
                               </Link>
                             </item>
                           </Grid>

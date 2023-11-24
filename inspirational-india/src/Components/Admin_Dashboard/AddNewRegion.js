@@ -10,37 +10,34 @@ import { NewReleasesOutlined } from "@mui/icons-material";
 import {
   Box,
   Container,
-  Grid,
-  List,
-  ListItemButton,
-  Paper,
+  Grid
 } from "@mui/material";
+import ListItems from "./ListItems";
 // import { Option } from "@mui/joy";
 // import { Link } from "react-router-dom";
 // import { ListDivider } from "@mui/joy";
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
-const regions = ["Himalaya", "Deccan", "Malabar", "NorthEast", "hello"];
 
 export default function AddNewRegion() {
-  const [region_name, setRegionName] = React.useState("");
+  const [name, setRegionName] = React.useState("");
   const [description, setDescription] = React.useState("");
-  
+
   const handleSubmit = (event) => {
     console.log("form submitted...");
     event.preventDefault();
-    const regionDetails = { region_name, description};
+    const regionDetails = { name, description };
     fetch("http://localhost:8181/v1/region/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(regionDetails),
     })
-      .then(response => response.json())
-      .then(response => {
-          if(response === undefined)
-            alert("Serve error \n try After some time")
-          alert("New Region Added.")
+      // .then(response => response.json())
+      .then((response) => {
+        if (response.status === 401)
+          alert("Serve error \n try After some time");
+        alert("New Region Added.");
       })
       .catch((e) => {
         alert("Cannot able to add new region");
@@ -89,7 +86,11 @@ export default function AddNewRegion() {
                       <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
                         <NewReleasesOutlined />
                       </Avatar>
-                      <Typography component="h1" variant="h5" color={"primary.success"}>
+                      <Typography
+                        component="h1"
+                        variant="h5"
+                        color={"primary.success"}
+                      >
                         Add New Region
                       </Typography>
                       <Box
@@ -108,17 +109,6 @@ export default function AddNewRegion() {
                           autoFocus
                           onChange={(e) => setRegionName(e.target.value)}
                         />
-                        {/* <Select
-                          className="form-control"
-                          value={region}
-                          onChange={(e) => setRegion(e.target.value)}
-                          fullWidth
-                        >
-                          <MenuItem value="">-- Select Region --</MenuItem>
-                          <MenuItem value="Open">Open</MenuItem>
-                          <MenuItem value="Pending">Pending</MenuItem>
-                          <MenuItem value="Completed">Completed</MenuItem>
-                        </Select> */}
                         <TextField
                           margin="normal"
                           required
@@ -152,42 +142,10 @@ export default function AddNewRegion() {
               </React.Fragment>
             </Grid>
             {/* Search Region */}
-            <Grid
-              item
-              xs={12}
-              md={6}
-              xl={6}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                mt: { xs: "5" },
-              }}
-            >
-              <Paper
-                sx={{
-                  p: 2,
-                  bgcolor: "#0f2027",
-                  height: "65vh",
-                  width: "350px",
-                  overflow: "scroll",
-                  mt: 8,
-                }}
-              >
-                <List>
-                  {regions.map((region) => (
-                    <>
-                      <ListItemButton>
-                        <Typography sx={{ color: "white" }}>
-                          {region}
-                        </Typography>
-                      </ListItemButton>
-                      {/* <ListDivider sx={{ bgcolor: "white" }} /> */}
-                    </>
-                  ))}
-                </List>
-              </Paper>
-            </Grid>
+            <ListItems
+              fetchUrl="http://localhost:8181/v1/region/allRegions"
+              TitleName="Region"
+            />
           </Grid>
           {/* </Container> */}
           {/* <Footer color='white'/> */}

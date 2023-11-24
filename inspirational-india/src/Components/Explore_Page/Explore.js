@@ -16,10 +16,39 @@ import { ListDivider } from "@mui/joy";
 //   event.preventDefault();
 // }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8];
-const regions = ["Himalaya", "Deccan", "Malabar", "NorthEast", "hello"];
+// const cards = [1, 2, 3, 4, 5, 6, 7, 8];
+// const regions = ["Himalaya", "Deccan", "Malabar", "NorthEast", "hello"];
 
 export default function Explore() {
+  const [regions, setRegions] = React.useState([]);
+  const [cards, setCards] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch("http://localhost:8181/v1/region/allRegions", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setRegions(response);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  const handleClick = (selectedRegion) => {
+    fetch(`http://localhost:8181/v1/blog/getBlogByRegion/${selectedRegion}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setCards(response);
+        console.log(cards);
+      })
+      .catch((err) => console.error(err));
+  };
+  
+
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -54,10 +83,13 @@ export default function Explore() {
                   <List>
                     {regions.map((region) => (
                       <>
-                        <ListItemButton>
+                        <ListItemButton
+                          onClick={() => handleClick(region)}
+                          key={region.region_id}
+                        >
                           <Link to="#">
                             <Typography sx={{ color: "white" }}>
-                              {region}
+                              {region.name}
                             </Typography>
                           </Link>
                         </ListItemButton>
@@ -104,8 +136,8 @@ export default function Explore() {
                         alignItems="center"
                       >
                         {cards.map((card) => (
-                          <Grid key={card} item xs={12} md={3} xl={3}>
-                            <item>
+                          <Grid item xs={12} md={3} xl={3}>
+                            <item key={card}>
                               <Link to="/blog">
                                 <Card
                                   image="/images/jaisalmer.jpg"

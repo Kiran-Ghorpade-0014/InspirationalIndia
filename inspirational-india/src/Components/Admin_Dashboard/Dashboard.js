@@ -28,7 +28,7 @@ export default function Dashboard() {
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <DashboardOutlined/>
         </Avatar>
-        <Typography component="h1" variant="h5" color={'success'}>
+        <Typography component="h1" variant="h5" color={'primary.success'}>
          Dashboard
         </Typography>
         <Box  noValidate sx={{ mt: 1 }}>
@@ -54,12 +54,12 @@ export default function Dashboard() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3}}
+            sx={{ mt: 3, mb:5}}
             href="/manage/tribe"
           >
             Manage Tribes
           </Button>
-          <Button
+          {/* <Button
             type="submit"
             fullWidth
             variant="contained"
@@ -67,7 +67,7 @@ export default function Dashboard() {
             href="/manage/user"
           >
             Manage Users
-          </Button>
+          </Button> */}
         </Box>
       </Box>
     </Container>
