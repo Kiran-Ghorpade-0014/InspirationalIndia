@@ -18,18 +18,19 @@ import ListItems from "./ListItems";
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
-// const regions = ["Himalaya", "Deccan", "Malabar", "NorthEast", "hello"];
 
 export default function AddNewBlog() {
+    sessionStorage.setItem("userType","ADMIN");
+
   const [Regions, setRegions] = React.useState([]);
   const [Tribes, setTribes] = React.useState([]);
-  // const [Blogs, setBlogs] = React.useState([]);
   const [region, setRegion] = React.useState("");
   const [tribe, setTribe] = React.useState("");
   const [name, setBlogTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
-
+  const [image, setImage] = React.useState(null);
   
+
   React.useEffect(() => {
     fetch("http://localhost:8181/v1/region/allRegions", {
       method: "GET",
@@ -40,32 +41,43 @@ export default function AddNewBlog() {
         setRegions(response);
       })
       .catch((err) => console.error(err));
-  },[]);
+  }, []);
 
-  const fetchTribe = (event) =>{
+  const fetchTribe = (event) => {
     setRegion(event.target.value);
     event.preventDefault();
-    console.log(event.target.value);
-    fetch("http://localhost:8181/v1/tribe/allTribes", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      // body: JSON.stringify(event.target.value)
+    let region_id = region.region_id?region.region_id:0;
+    fetch("http://localhost:8181/v1/tribe/getTribeByRegion/"+region_id, {
+      method: "GET"
     })
       .then((response) => response.json())
       .then((response) => {
         setTribes(response);
       })
       .catch((err) => console.error(err));
-  }
+  };
+
+  
+  const handleImageChange = (event) => {
+    // Handle image selection
+    setImage(event.target.files[0]);
+  };
 
   const handleSubmit = (event) => {
-    console.log("form submitted...");
     event.preventDefault();
-    const blogDetails = { name, region, tribe, description };
+    if(name === '' || region === '' || tribe === '' || description === ''){
+      return;
+    }
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("region", region.region_id);
+    formData.append("tribe", tribe.tribe_id);
+    formData.append("description", description);
+    formData.append("image", image); // Append the image to the form data
+
     fetch("http://localhost:8181/v1/blog/add", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(blogDetails),
+      body: formData,
     })
       .then((response) => response.json())
       .then((response) => {
@@ -77,6 +89,8 @@ export default function AddNewBlog() {
         console.log(e);
       });
   };
+
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -151,9 +165,7 @@ export default function AddNewBlog() {
                         >
                           <MenuItem value="">-- Select Region --</MenuItem>
                           {Regions.map((region) => (
-                            <MenuItem value={region}>
-                              {region.name}
-                            </MenuItem>
+                            <MenuItem value={region}>{region.name}</MenuItem>
                           ))}
                         </Select>
                         <Select
@@ -166,11 +178,16 @@ export default function AddNewBlog() {
                         >
                           <MenuItem value="">-- Select Tribe --</MenuItem>
                           {Tribes.map((tribe) => (
-                            <MenuItem value={tribe}>
-                              {tribe.name}
-                            </MenuItem>
+                            <MenuItem value={tribe}>{tribe.name}</MenuItem>
                           ))}
                         </Select>
+                        {/* <input type="file"> Upload Image </input> */}
+                        <input
+                          type="file"
+                          label=" Upload Image"
+                          id="fileInput"
+                          onChange={handleImageChange}
+                        />
                         <TextField
                           margin="normal"
                           required

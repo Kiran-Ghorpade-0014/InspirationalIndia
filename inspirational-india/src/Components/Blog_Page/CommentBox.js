@@ -1,12 +1,40 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import { Message } from "@mui/icons-material";
-import { Button, TextField } from "@mui/material";
+import { Button, List, ListItemButton, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
 function CommentBox() {
+  let isLogin = false;
+  if (sessionStorage.getItem("userType") === "USER") {
+    isLogin = true;
+  } else if (sessionStorage.getItem("userType") === "ADMIN") {
+    isLogin = true;
+  } else {
+    isLogin = false;
+  }
+
+  const ListObject = ["wow","incredible","informative"];
+
+  function sendComment(){
+      const user = sessionStorage.getItem('userDetails');
+      const commentDetails = "";
+      fetch("http://localhost:8181/v1/comment/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify(commentDetails),
+      })
+        .then((response) => {
+          if(response.status === 201)
+          alert("Commented Successfully...");
+          // navigate("/signin");
+        })
+        .catch(() => {
+          alert("Exception Occured.")
+        });
+  }
+
   return (
     <>
       <Grid
@@ -40,7 +68,7 @@ function CommentBox() {
                 alignItems: "start",
               }}
             >
-              <Message />
+              {/* <Message />
               <Typography>Wonderful</Typography>
               <Message />
               <Typography>boring😒</Typography>
@@ -53,11 +81,23 @@ function CommentBox() {
               <Message />
               <Typography>Love you🤍</Typography>
               <Message />
-              <Typography>😍😍😍</Typography>
+              <Typography>😍😍😍</Typography> */}
+              <List>
+            {ListObject.map((obj) => (
+              <>
+                <ListItemButton key={obj}>
+                  <Typography sx={{ color: "white" }}>
+                    {obj}
+                  </Typography>
+                </ListItemButton>
+                {/* <ListDivider sx={{ bgcolor: "white" }} /> */}
+              </>
+            ))}
+          </List>
             </Box>
           </Grid>
           <Grid item xs={12}>
-            <Grid container>
+            <Grid component='form' container>
               <Grid item xl={8}>
                 <TextField
                   sx={{
@@ -77,7 +117,7 @@ function CommentBox() {
                   size="large"
                   variant="contained"
                   sx={{ mb: 2, ml: 5 }}
-                  href="#"
+                  href={isLogin?sendComment:"/signin"}
                 >
                   Send
                 </Button>

@@ -37,7 +37,9 @@ export default function SignIn() {
             alert("Login Failed")
           sessionStorage.setItem("userType","USER");
           alert("Login Successfull.")
+          sessionStorage.setItem("userDetails", JSON.stringify(response));
           sessionStorage.setItem("username",response.username.toString());                                       
+          sessionStorage.setItem("userid",response.user_Id.toString());                                       
           navigate("/");
       })
       .catch((e) => {

@@ -7,18 +7,40 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const [password, setPassword] = React.useState('');
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
+    if(password === ''){
+      return;
+    }
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      password: data.get('password'),
-    });
+    fetch("http://localhost:8181/v1/user/admin/authentication", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: password.toString()
+    })
+      // .then(response => response.json())
+      .then(response => {
+          if(response.status !== 200)
+            throw new Error("Login Failed");
+          else{
+            sessionStorage.setItem("userType","ADMIN");
+            alert("Login Successfull.");
+            navigate("/dashboard");
+          }
+      })
+      .catch((e) => {
+        alert("Login Failed.");
+        console.log(e);
+      });
   };
 
   return (
@@ -48,7 +70,7 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              onChange={(e)=> setPassword(e.target.value)}
             />
             <Button
               type="submit"

@@ -11,6 +11,7 @@ import {
 import Card from "../Home_Page/Card";
 import { Link } from "react-router-dom";
 import { ListDivider } from "@mui/joy";
+import Blog from "../Blog_Page/Blog";
 
 // function preventDefault(event) {
 //   event.preventDefault();
@@ -36,17 +37,17 @@ export default function Explore() {
   }, []);
 
   const handleClick = (selectedRegion) => {
-    fetch(`http://localhost:8181/v1/blog/getBlogByRegion/${selectedRegion}`, {
+    fetch('http://localhost:8181/v1/blog/getBlogByRegion/'+selectedRegion.region_id, {
       method: "GET",
-      headers: { "Content-Type": "application/json" }
     })
       .then((response) => response.json())
       .then((response) => {
         setCards(response);
-        console.log(cards);
+        // console.log(cards);
       })
       .catch((err) => console.error(err));
   };
+  
   
 
   return (
@@ -112,6 +113,7 @@ export default function Explore() {
                     bgcolor: "#0f2027",
                     width: "60vw",
                     height: "85vh",
+                    overflow: 'scroll'
                   }}
                 >
                   <React.Fragment>
@@ -137,10 +139,14 @@ export default function Explore() {
                       >
                         {cards.map((card) => (
                           <Grid item xs={12} md={3} xl={3}>
-                            <item key={card}>
+                            <item key={card.blog_id}>
                               <Link to="/blog">
                                 <Card
-                                  image="/images/jaisalmer.jpg"
+                                onClick={(e)=>{
+                                  <Blog blog_id={card.blog_id}/>
+                                }}
+                                  title ={card.name}
+                                  image={"data:image/png;base64,"+card.image}
                                   sx={{ md: "10px" }}
                                 />
                               </Link>

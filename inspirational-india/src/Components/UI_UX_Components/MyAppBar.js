@@ -19,12 +19,13 @@ const choice = ["SignIn"];
 let isLogin = false;
 
 export default function MyAppBar() {
-  let username = "";
+  let username = "Rutik";
+  // username
 
   function updateUsername() {
     if (sessionStorage.getItem("userType") === "USER") {
       isLogin = true;
-      username = sessionStorage.getItem("username");
+      username=sessionStorage.getItem("username");
       // setUsername(sessionStorage.getItem("username"));
     } else if (sessionStorage.getItem("userType") === "ADMIN") {
       isLogin = true;
@@ -113,7 +114,7 @@ export default function MyAppBar() {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 3 }}>
                 <Avatar alt="Remy Sharp" src="#" />
                 <Typography color="white" variant="h6" sx={{ ml: 2 }}>
-                  {isLogin === true ? "Hello," + { username } + "!" : "Sign In"}
+                  {isLogin ? "Hello," +  username  + "!" : "Sign In"}
                 </Typography>
               </IconButton>
             </Tooltip>

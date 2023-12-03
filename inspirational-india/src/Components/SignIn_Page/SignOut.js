@@ -9,6 +9,8 @@ export default function SignOut() {
   React.useEffect(() => {
           sessionStorage.setItem("userType", null);
           sessionStorage.setItem("username", null);
+          sessionStorage.setItem("userDetails", null);
+          sessionStorage.setItem("userid", null);
           navigate("/signin");
   });
 

@@ -21,6 +21,8 @@ import ListItems from "./ListItems";
 const defaultTheme = createTheme();
 
 export default function AddNewRegion() {
+  sessionStorage.setItem("userType","ADMIN");
+
   const [name, setRegionName] = React.useState("");
   const [description, setDescription] = React.useState("");
 

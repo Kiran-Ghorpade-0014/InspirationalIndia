@@ -20,6 +20,8 @@ import ListItems from "../Admin_Dashboard/ListItems";
 const defaultTheme = createTheme();
 
 export default function AddNewTribe() {
+  sessionStorage.setItem("userType", "ADMIN");
+
   const [Regions, setRegions] = React.useState([]);
   // const [Tribes, setTribes] = React.useState([]);
   const [name, setTribeName] = React.useState("");
@@ -37,24 +39,28 @@ export default function AddNewTribe() {
       })
       .catch((err) => console.error(err));
   }, []);
-
+    
   const handleSubmit = (event) => {
-    console.log("form submitted...");
     event.preventDefault();
-    const tribeDetails = { name, region, description };
+    if(name === '' || region === '' || description === ''){
+      return;
+    }
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("region", region.region_id);
+    formData.append("description", description);
+
     fetch("http://localhost:8181/v1/tribe/add", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(tribeDetails),
+      body: formData,
     })
       .then((response) => response.json())
       .then((response) => {
-        if (response.status === 401)
-          alert("Serve error \n try After some time");
-        alert("New Tribe Added.");
+        if (response === undefined) alert("Serve error \n try After some time");
+        alert("New Blog Added.");
       })
       .catch((e) => {
-        alert("Cannot able to add new Tribe");
+        alert("Cannot able to add new Blog");
         console.log(e);
       });
   };
@@ -125,18 +131,16 @@ export default function AddNewTribe() {
                           onChange={(e) => setTribeName(e.target.value)}
                         />
                         <Select
-                          required
                           className="form-control"
                           value={region}
                           onChange={(e) => setRegion(e.target.value)}
                           fullWidth
                           sx={{ mt: 1 }}
+                          required
                         >
                           <MenuItem value="">-- Select Region --</MenuItem>
                           {Regions.map((region) => (
-                            <MenuItem value={region}>
-                              {region.name}
-                            </MenuItem>
+                            <MenuItem value={region}>{region.name}</MenuItem>
                           ))}
                         </Select>
                         <TextField

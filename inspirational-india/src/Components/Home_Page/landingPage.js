@@ -1,64 +1,65 @@
 // import * as React from "react";
-import { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import Button from "@mui/joy/Button/Button";
-import Card from "./Card";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import Footer from "../UI_UX_Components/Footer";
 import { Link } from "react-router-dom";
+import Card from "../Home_Page/Card";
+import Blog from "../Blog_Page/Blog";
+
 
 function LandingPage() {
   const page_style = {
     color: "white",
     fontFamily: "arial",
     maxHeight: "100vh",
-    maxWidth: "96vw"
+    maxWidth: "96vw",
   };
 
-  const content_style = {
-    // width: "50%",
-    // display: "flex",
-    // flexDirection: "column",
-    // justifyContent: "center",
-    // textAlign: "justify",
-  };
-
-  const Titles = [
-    "MALABAR",
-    "NORTH EAST",
-    "WESTERN GHATS",
-    "THAR",
-    "DECCAN PLATEU",
-  ];
-
-  const description=[
-    "Malabar is a region located in the Western Ghats, renowned for its lush green landscape and serene beauty.",
-    "North East is home to numerous indigenous tribes, each with its own unique colorful festivals.",
-    "The region is blessed by the presence of the majestic River Ganga, which meanders through this land, bringing life and fertility to the area.",
-    "The region is blessed by the presence of the majestic River Ganga, which meanders through this land, bringing life and fertility to the area.",
-    "The region is blessed by the presence of the majestic River Ganga, which meanders through this land, bringing life and fertility to the area.",
-
-  ];
-
-  const cardImages=[
-    "/images/snow-leoperd.jpg",
-    "/images/north_east_india.jpg",
-    "/images/mh.jpg",
-    "/images/vanela.jpg",
-    "/images/jaisalmer.jpg"
-  ];
+  const [regions, setRegions] = React.useState([]);
+  const [cards, setCards] = React.useState([]);
 
   const [titleIndex, setTitleIndex] = useState(0);
+  const temp = { name: "Inspirational India", description: "Welcome to Cultural Repository" };
+  const [region, setRegion] = useState(temp);
   const intervalTime = 5000;
-  useEffect(()=>{
+
+  // setRegion(temp);
+
+  React.useEffect(() => {
+    fetch("http://localhost:8181/v1/region/allRegions", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setRegions(response);
+      })
+  }, []);
+
+  const fetchBlogs = (selectedRegion) => {
+    fetch('http://localhost:8181/v1/blog/getBlogByRegion/'+selectedRegion.region_id, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setCards(response);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
     const interval = setInterval(() => {
-        setTitleIndex((prevIndex) => (prevIndex + 1) % Titles.length);
+      // handleClick();
+      setTitleIndex((prevIndex) => (prevIndex + 1) % regions.length);
+      setRegion(regions[titleIndex]);
+      fetchBlogs(regions[titleIndex]);
+
     }, intervalTime);
-    return ()=> clearInterval(interval);
-  });
+    return () => clearInterval(interval);
+  }, [titleIndex, region, regions, cards]);
 
-
-  const cards = [1, 2, 3, 4, 5, 6];
 
   return (
     <>
@@ -79,17 +80,15 @@ function LandingPage() {
                 alignItems="center"
                 sx={{
                   mt: "25%",
-                  // margin:'50% auto',
-                  // marginLeft:'15%'
                 }}
               >
-                <div style={content_style}>
+                <div>
                   <Grid item>
                     <item>
                       {/* Title */}
                       <Typography variant="h3" sx={{ fontWeight: 900 }}>
                         {/* MALABAR */}
-                        {Titles[titleIndex]}
+                        {region.name}
                       </Typography>
                     </item>
                   </Grid>
@@ -104,7 +103,7 @@ function LandingPage() {
                           fontWeight: "150",
                         }}
                       >
-                        {description[titleIndex]}
+                        {region.description}
                       </Typography>
                     </item>
                   </Grid>
@@ -112,11 +111,13 @@ function LandingPage() {
                     <item>
                       {/* Button */}
                       <Button variant="solid" size="lg" color="primary">
-                      <Link to="/explore" >
-                        <Typography  sx={{ textDecoration: "none", color: "white"}}>
-                        Explore
-                        </Typography>
-                      </Link>
+                        <Link to="/explore">
+                          <Typography
+                            sx={{ textDecoration: "none", color: "white" }}
+                          >
+                            Explore
+                          </Typography>
+                        </Link>
                       </Button>
                     </item>
                   </Grid>
@@ -135,19 +136,18 @@ function LandingPage() {
               justifyContent="center"
               alignItems="center"
               sx={{
-                mt: "3%",
-                md: "0%",
-                // maxWidth:'50vw',
-                // maxHeight:'90vh'
+                mt: "25%",
+                md: "10%",
               }}
             >
               {cards.map((card) => (
-                <Grid2 key={card} item xs={12} md={6} xl={6}>
-                  <item>
-                    <Link to="/blog">
-                    <Card image={cardImages[titleIndex]} />
-                    </Link>
-                  </item>
+                <Grid2 key={card.blog_id} item xs={12} md={6} xl={6}>
+                  <Link to="">
+                    <Card
+                      title={card.name}
+                      image = {"data:image/png;base64,"+card.image}
+                      />
+                  </Link>
                 </Grid2>
               ))}
             </Grid2>

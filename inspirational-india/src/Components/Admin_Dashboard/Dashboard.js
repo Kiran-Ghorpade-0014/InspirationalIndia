@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Avatar, Button, Typography } from '@mui/material';
 import { DashboardOutlined } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 // import Deposits from './Deposits';
 // import Orders from './Orders';
 
@@ -13,10 +14,16 @@ const defaultTheme = createTheme();
 
 export default function Dashboard() {
 
+  const navigate = useNavigate();
+  if (sessionStorage.getItem("userType") !== "ADMIN") {
+    navigate("/admin/signin");
+  }
+
   return (
     <ThemeProvider theme={defaultTheme} >
     <Container component="main" maxWidth="xs" sx={{backgroundColor:'#ffffff'}}>
       {/* <CssBaseline /> */}
+      {sessionStorage.setItem("userType","ADMIN")}
       <Box
         sx={{
           marginTop: 8,

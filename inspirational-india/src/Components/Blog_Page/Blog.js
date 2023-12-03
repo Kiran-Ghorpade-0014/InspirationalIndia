@@ -47,19 +47,20 @@ import CommentBox from "./CommentBox";
     // TODO remove, this demo shouldn't need to reset the theme.
     const defaultTheme = createTheme();
     
-    export default function Blog() {
+    export default function Blog(props) {
       const [blog , setBlog] = React.useState([]);
       
       let mainFeaturedPost = {
         title: blog?blog.name:"No Title Found",
-        description:
-          "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-        image: blog?blog.image:"public/images/north_east_india.jpg",
+        // description:
+        //   "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
+        image: blog?"data:image/png;base64,"+blog.image:"public/images/north_east_india.jpg",
         imageText: "main image description",
       };
 
       React.useEffect(() => {
-    fetch("http://localhost:8181/v1/blog/getBlog/1", {
+    fetch("http://localhost:8181/v1/blog/getBlog/21", {
+    // fetch("http://localhost:8181/v1/blog/getBlog/"+props.blog_id, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -69,8 +70,7 @@ import CommentBox from "./CommentBox";
         // main
       })
       .catch((err) => console.error(err));
-      // mainFeaturedPost.title = blog.name;
-    },[]);
+    },[props.blog_id]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -93,7 +93,7 @@ import CommentBox from "./CommentBox";
             sx={{ overflowY: "scroll" }}
           >
             <main height={{ xl: "50vh", md: "50vh", xs: "100vh" }}>
-              <MainFeaturedPost post={mainFeaturedPost} />
+              <MainFeaturedPost post={mainFeaturedPost} date={blog.upload_dateTime} />
               <Paper
                 sx={{
                   position: "relative",

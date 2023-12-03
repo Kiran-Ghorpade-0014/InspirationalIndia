@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Footer from "../UI_UX_Components/Footer";
+import { useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -20,6 +21,8 @@ export default function SignIn() {
   const [email, setEmail] = React.useState("");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const navigate = useNavigate();
+
 
   const handleSubmit = (event) => {
     console.log("form submitted...");
@@ -33,6 +36,7 @@ export default function SignIn() {
       .then((response) => {
         if(response.status === 201)
         alert("Registration Successfull...");
+        navigate("/signin");
       })
       .catch(() => {
         alert("Exception Occure.")

@@ -17,6 +17,7 @@ import AddNewBlog from "../Admin_Dashboard/AddNewBlog";
 import AddNewTribe from "../Admin_Dashboard/AddNewTribe";
 import AddNewRegion from "../Admin_Dashboard/AddNewRegion";
 import SignOut from "../SignIn_Page/SignOut";
+import About from "../About/About";
 
 function Home() {
   const style = {
@@ -39,7 +40,8 @@ function Home() {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/recommended" element={<Recommended />} />
-              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/" element={<Blog />} />
+              <Route path="/about" element={<About />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/admin/signin" element={<SignIn />} />
