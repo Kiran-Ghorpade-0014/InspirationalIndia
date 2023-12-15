@@ -9,73 +9,41 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Footer from "./Footer";
+import { useParams } from 'react-router-dom';
+
 
 import CommentBox from "./CommentBox";
-// import post1 from './blog-post.1.md';
-// import post2 from './blog-post.2.md';
-// import post3 from './blog-post.3.md';
 
+const defaultTheme = createTheme();
 
-// const featuredPosts = [
-  //   {
-    //     title: "Featured post1",
-//     date: "Nov 12",
-//     description:
-//       "This is a wider card with supporting text below as a natural lead-in to additional content.",
-//     // image: "https://source.unsplash.com/random?wallpapers",
-//     imageLabel: "Image Text",
-//   },
-//   {
-  //     title: "Featured post2",
-  //     date: "Nov 12",
-  //     description:
-  //       "This is a wider card with supporting text below as a natural lead-in to additional content.",
-  //     // image: "https://source.unsplash.com/random?wallpapers",
-  //     imageLabel: "Image Text",
-  //   },
-  //   {
-    //     title: "Featured post3",
-    //     date: "Nov 12",
-    //     description:
-    //       "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    //     // image: "https://source.unsplash.com/random?wallpapers",
-    //     imageLabel: "Image Text",
-    //   },
-    // ];
-    
-    // const posts = [post1, post2, post3];    
-    // TODO remove, this demo shouldn't need to reset the theme.
-    const defaultTheme = createTheme();
-    
-    export default function Blog(props) {
-      const [blog , setBlog] = React.useState([]);
-      
-      let mainFeaturedPost = {
-        title: blog?blog.name:"No Title Found",
-        // description:
-        //   "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-        image: blog?"data:image/png;base64,"+blog.image:"public/images/north_east_india.jpg",
-        imageText: "main image description",
-      };
+export default function Blog() {
+  const { blog_Id } = useParams();
+  const [blog, setBlog] = React.useState([]);
 
-      React.useEffect(() => {
-    fetch("http://localhost:8181/v1/blog/getBlog/21", {
-    // fetch("http://localhost:8181/v1/blog/getBlog/"+props.blog_id, {
+  let mainFeaturedPost = {
+    title: blog ? blog.name : "No Title Found",
+    image: blog
+      ? "data:image/png;base64," + blog.image
+      : "public/images/north_east_india.jpg",
+    imageText: "main image description",
+  };
+
+  React.useEffect(() => {
+    fetch("http://localhost:8181/v1/blog/getBlog/"+blog_Id, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => response.json())
       .then((response) => {
         setBlog(response);
-        // main
       })
       .catch((err) => console.error(err));
-    },[props.blog_id]);
+  }, [blog_Id]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container maxWidth="lg">
-        <Header title="Blog" />
+        <Header title="Blog" blogId={blog_Id} />
         <Grid
           container
           display="flex"
@@ -93,7 +61,10 @@ import CommentBox from "./CommentBox";
             sx={{ overflowY: "scroll" }}
           >
             <main height={{ xl: "50vh", md: "50vh", xs: "100vh" }}>
-              <MainFeaturedPost post={mainFeaturedPost} date={blog.upload_dateTime} />
+              <MainFeaturedPost
+                post={mainFeaturedPost}
+                date={blog.upload_dateTime}
+              />
               <Paper
                 sx={{
                   position: "relative",
@@ -118,7 +89,7 @@ import CommentBox from "./CommentBox";
                         textAlign="justify"
                       >
                         {/* blog text */}
-                        {blog?blog.description:"No Content"}
+                        {blog ? blog.description : "No Content"}
                       </Typography>
                     </Box>
                   </Grid>
@@ -137,7 +108,7 @@ import CommentBox from "./CommentBox";
             />
           </Grid>
           <Grid item xs={12} md={4} xl={4}>
-            <CommentBox />
+            <CommentBox blogId={blog_Id}/>
           </Grid>
         </Grid>
       </Container>

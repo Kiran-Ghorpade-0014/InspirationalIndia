@@ -11,14 +11,7 @@ import {
 import Card from "../Home_Page/Card";
 import { Link } from "react-router-dom";
 import { ListDivider } from "@mui/joy";
-import Blog from "../Blog_Page/Blog";
 
-// function preventDefault(event) {
-//   event.preventDefault();
-// }
-
-// const cards = [1, 2, 3, 4, 5, 6, 7, 8];
-// const regions = ["Himalaya", "Deccan", "Malabar", "NorthEast", "hello"];
 
 export default function Explore() {
   const [regions, setRegions] = React.useState([]);
@@ -37,9 +30,13 @@ export default function Explore() {
   }, []);
 
   const handleClick = (selectedRegion) => {
-    fetch('http://localhost:8181/v1/blog/getBlogByRegion/'+selectedRegion.region_id, {
-      method: "GET",
-    })
+    fetch(
+      "http://localhost:8181/v1/blog/getBlogByRegion/" +
+        selectedRegion.region_id,
+      {
+        method: "GET",
+      }
+    )
       .then((response) => response.json())
       .then((response) => {
         setCards(response);
@@ -47,8 +44,6 @@ export default function Explore() {
       })
       .catch((err) => console.error(err));
   };
-  
-  
 
   return (
     <>
@@ -62,14 +57,7 @@ export default function Explore() {
           }}
         >
           <Container maxWidth="lg" sx={{ mb: 0 }}>
-            <Grid
-              container
-              alignItems="flex-start"
-              justifyContent="flex-start"
-              sx={{
-                display: "flex",
-              }}
-            >
+            <Grid container alignItems="flex-start" justifyContent="flex-start">
               {/* Search Region */}
               <Grid item xs={12} md={4} xl={4}>
                 <Paper
@@ -113,7 +101,7 @@ export default function Explore() {
                     bgcolor: "#0f2027",
                     width: "60vw",
                     height: "85vh",
-                    overflow: 'scroll'
+                    overflow: "scroll",
                   }}
                 >
                   <React.Fragment>
@@ -140,13 +128,10 @@ export default function Explore() {
                         {cards.map((card) => (
                           <Grid item xs={12} md={3} xl={3}>
                             <item key={card.blog_id}>
-                              <Link to="/blog">
+                              <Link to={`/blog/${card.blog_id}`}>
                                 <Card
-                                onClick={(e)=>{
-                                  <Blog blog_id={card.blog_id}/>
-                                }}
-                                  title ={card.name}
-                                  image={"data:image/png;base64,"+card.image}
+                                  title={card.name}
+                                  image={"data:image/jpg;base64," + card.image}
                                   sx={{ md: "10px" }}
                                 />
                               </Link>

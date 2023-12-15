@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
@@ -18,8 +19,7 @@
     "react-scripts": "^5.0.1",
     "recharts": "^2.8.0",
     "swiper": "^8.4.7",
-    "web-vitals": "^2.1.4",
-    "@babel/plugin-proposal-private-property-in-object":""
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

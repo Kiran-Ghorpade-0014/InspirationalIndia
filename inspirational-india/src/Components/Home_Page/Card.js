@@ -11,7 +11,7 @@ export default function MediaCard(props) {
         sx={{
           width: 180,
           maxWidth: 250,
-          height: 150,
+          height: 200,
           backgroundColor: "white",
         }}
       >
@@ -27,7 +27,7 @@ export default function MediaCard(props) {
         </CardContent> */}
         <CardMedia
           sx={{
-            height: 150,
+            height: 200,
             width: 180,
             // backgroundPosition: "center",
             // // backgroundRepeat: "no-repeat",

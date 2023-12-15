@@ -4,10 +4,9 @@ import { Grid, Typography } from "@mui/material";
 import Button from "@mui/joy/Button/Button";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import Footer from "../UI_UX_Components/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "../Home_Page/Card";
-import Blog from "../Blog_Page/Blog";
-
+// import Blog from "../Blog_Page/Blog";
 
 function LandingPage() {
   const page_style = {
@@ -21,9 +20,14 @@ function LandingPage() {
   const [cards, setCards] = React.useState([]);
 
   const [titleIndex, setTitleIndex] = useState(0);
-  const temp = { name: "Inspirational India", description: "Welcome to Cultural Repository" };
+  const temp = {
+    name: "Inspirational India",
+    description: "Welcome to Cultural Repository",
+  };
   const [region, setRegion] = useState(temp);
   const intervalTime = 5000;
+  const navigate = useNavigate();
+  // const totalCards = 8;
 
   // setRegion(temp);
 
@@ -36,17 +40,22 @@ function LandingPage() {
       .then((response) => {
         setRegions(response);
       })
-  }, []);
+      .catch(()=> navigate("/ErrorPage"))
+  }, [navigate]);
 
   const fetchBlogs = (selectedRegion) => {
-    fetch('http://localhost:8181/v1/blog/getBlogByRegion/'+selectedRegion.region_id, {
-      method: "GET",
-    })
+    fetch(
+      "http://localhost:8181/v1/blog/getBlogByRegion/" +
+        selectedRegion.region_id,
+      {
+        method: "GET",
+      }
+    )
       .then((response) => response.json())
       .then((response) => {
         setCards(response);
       })
-      .catch((err) => console.error(err));
+      .catch(()=> navigate("/ErrorPage"))
   };
 
   useEffect(() => {
@@ -55,11 +64,9 @@ function LandingPage() {
       setTitleIndex((prevIndex) => (prevIndex + 1) % regions.length);
       setRegion(regions[titleIndex]);
       fetchBlogs(regions[titleIndex]);
-
     }, intervalTime);
     return () => clearInterval(interval);
-  }, [titleIndex, region, regions, cards]);
-
+  }, [titleIndex, regions]);
 
   return (
     <>
@@ -136,17 +143,23 @@ function LandingPage() {
               justifyContent="center"
               alignItems="center"
               sx={{
-                mt: "25%",
+                mt: "15%",
                 md: "10%",
               }}
             >
-              {cards.map((card) => (
-                <Grid2 key={card.blog_id} item xs={12} md={6} xl={6}>
-                  <Link to="">
+              {cards.slice(0, 6).map((card) => (
+                <Grid2
+                  key={card.blog_id}
+                  item
+                  xs={12}
+                  md={6}
+                  xl={6}
+                >
+                  <Link to={`/blog/${card.blog_id}`}>
                     <Card
                       title={card.name}
-                      image = {"data:image/png;base64,"+card.image}
-                      />
+                      image={"data:image/png;base64," + card.image}
+                    />
                   </Link>
                 </Grid2>
               ))}

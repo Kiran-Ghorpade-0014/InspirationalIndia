@@ -45,8 +45,8 @@ export default function AddNewBlog() {
 
   const fetchTribe = (event) => {
     setRegion(event.target.value);
-    event.preventDefault();
-    let region_id = region.region_id?region.region_id:0;
+    let selectedRegion = event.target.value;
+    let region_id = selectedRegion.region_id?selectedRegion.region_id:0;
     fetch("http://localhost:8181/v1/tribe/getTribeByRegion/"+region_id, {
       method: "GET"
     })

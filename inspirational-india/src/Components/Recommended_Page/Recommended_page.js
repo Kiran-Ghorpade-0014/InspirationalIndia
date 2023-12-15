@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import { Box, Container, Grid, Paper } from "@mui/material";
 import Card from "../Home_Page/Card";
 import { Link, useNavigate } from "react-router-dom";
+import Blog from "../Blog_Page/Blog";
 
 // function preventDefault(event) {
 //   event.preventDefault();
@@ -15,21 +16,19 @@ export default function Recommended() {
 
   if (sessionStorage.getItem("userType") === "null") {
     navigate("/signin");
-    return(
-    <>
-    <Container
-      sx={{
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center',
-        height:'80vh'
-      }}
-    >
-    <Typography color='white'>
-    Sign In to access this Content
-    </Typography>
-    </Container>
-    </>
+    return (
+      <>
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "80vh",
+          }}
+        >
+          <Typography color="white">Sign In to access this Content</Typography>
+        </Container>
+      </>
     );
   }
 
@@ -80,9 +79,15 @@ export default function Recommended() {
                         alignItems="center"
                       >
                         {cards.map((card) => (
-                          <Grid key={card} item xs={12} md={3} xl={3}>
+                          <Grid
+                            key={card}
+                            item
+                            xs={12}
+                            md={3}
+                            xl={3}
+                          >
                             <item>
-                              <Link to="/blog">
+                            <Link to={`/blog/${card.blog_id}`}>
                                 <Card
                                   image="/images/jaisalmer.jpg"
                                   sx={{ md: "10px" }}

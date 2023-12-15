@@ -1,19 +1,46 @@
-import { useEffect } from "react";
+// ServerErrorPage.js
+import React from 'react';
+import { Button, Typography, Container } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-function App() {
+const ErrorPage = () => {
+  // Simulate a server error
+  const simulateServerError = () => {
+    throw new Error('Simulated 500 Internal Server Error');
+  };
 
-    // let httpStatus;
-	useEffect(() => {
-		fetch('http://localhost:8181/user/allUsers')
-			.then(response => response.json())
-			.then(json => console.log(json))
-	}, []);
+  return (
+    <Container
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '80vh',
+      }}
+    >
+      <Typography variant="h1" color="error" gutterBottom>
+        Error 🐞
+      </Typography>
+      <Typography variant="h4" color="textSecondary" align="center" gutterBottom>
+        Internal Server Error 💔🪲
+      </Typography>
+      <Typography variant="h6" color="textSecondary" align="justify" gutterBottom>
+       Fellow Developers - Follow these Steps: <br/>
+	   1. Check Connection To Server <br/>
+	   2. Check Error in Browser Console <br/>
+	   3. Blame Pratik <br/>
+	   4. Blame Sumit <br/>
+	   5. Say Sorry to Sir <br/>
 
-	return (
-		<div>
-			Different ways to fetch Data
-		</div>
-	);
-}
+		<Link to='/' >
+			<Typography variant='h6' color='whitesmoke' align='justify'>
+			6. Try Again...
+			</Typography>
+		</Link>
+      </Typography>
+    </Container>
+  );
+};
 
-export default App;
+export default ErrorPage;

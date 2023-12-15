@@ -7,7 +7,6 @@ import UserSignIn from "../SignIn_Page/SignIn";
 import Registration from "../SignIn_Page/Registration";
 import Recommended from "../Recommended_Page/Recommended_page";
 import Explore from "../Explore_Page/Explore";
-
 import {
   BrowserRouter as Router,
   Route,
@@ -18,6 +17,8 @@ import AddNewTribe from "../Admin_Dashboard/AddNewTribe";
 import AddNewRegion from "../Admin_Dashboard/AddNewRegion";
 import SignOut from "../SignIn_Page/SignOut";
 import About from "../About/About";
+import ErrorPage from "../Error_page/ErrorPage";
+import Reports from "../Admin_Dashboard/reports";
 
 function Home() {
   const style = {
@@ -39,8 +40,9 @@ function Home() {
           <div>
             <Routes>
               <Route path="/" element={<LandingPage />} />
+              <Route path="/ErrorPage" element={<ErrorPage />} />
               <Route path="/recommended" element={<Recommended />} />
-              <Route path="/blog/" element={<Blog />} />
+              <Route path="/blog/:blog_Id" element={<Blog />} />
               <Route path="/about" element={<About />} />
               <Route path="/explore" element={<Explore />} />
               <Route path="/dashboard" element={<Dashboard />} />
@@ -51,6 +53,7 @@ function Home() {
               <Route path="/manage/blog" element={<AddNewBlog />} />
               <Route path="/manage/region" element={<AddNewRegion />} />
               <Route path="/manage/tribe" element={<AddNewTribe />} />
+              <Route path="/manage/reports" element={<Reports />} />
             </Routes>
           </div>
         </div>

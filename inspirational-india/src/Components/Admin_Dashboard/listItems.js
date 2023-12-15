@@ -40,9 +40,9 @@ export default function ListItems(props) {
             p: 2,
             bgcolor: "#0f2027",
             height: "65vh",
-            width: "350px",
+            width: "650px",
             overflow: "scroll",
-            mt: 8,
+            mt: 7,
           }}
         >
           <Typography component="h1" variant="h5" color="white">
