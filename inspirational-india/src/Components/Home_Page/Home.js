@@ -1,3 +1,8 @@
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 import Appbar from "../UI_UX_Components/MyAppBar";
 import LandingPage from "../Home_Page/LandingPage";
 import Blog from "../Blog_Page/Blog";
@@ -7,18 +12,13 @@ import UserSignIn from "../SignIn_Page/SignIn";
 import Registration from "../SignIn_Page/Registration";
 import Recommended from "../Recommended_Page/Recommended_page";
 import Explore from "../Explore_Page/Explore";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from "react-router-dom";
 import AddNewBlog from "../Admin_Dashboard/AddNewBlog";
 import AddNewTribe from "../Admin_Dashboard/AddNewTribe";
 import AddNewRegion from "../Admin_Dashboard/AddNewRegion";
 import SignOut from "../SignIn_Page/SignOut";
 import About from "../About/About";
 import ErrorPage from "../Error_page/ErrorPage";
-import Reports from "../Admin_Dashboard/reports";
+import Reports from "../Admin_Dashboard/Reports";
 
 function Home() {
   const style = {
@@ -53,7 +53,7 @@ function Home() {
               <Route path="/manage/blog" element={<AddNewBlog />} />
               <Route path="/manage/region" element={<AddNewRegion />} />
               <Route path="/manage/tribe" element={<AddNewTribe />} />
-              <Route path="/manage/reports" element={<Reports />} />
+              <Route path="/manage/reports/:type" element={<Reports />} />
             </Routes>
           </div>
         </div>

@@ -15,7 +15,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(171,102,255,1) 0%, rgba(116,182,247,1) 90% );
+  background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgb(171, 102, 255) 0%, rgb(116, 182, 247) 90% );
   overflow: hidden;
 }
 
@@ -67,11 +67,11 @@
 }
 
 .swiper-slide--three span {
-  background: #b45205;
+  background: #b45105;
 }
 
 .swiper-slide--four span {
-  background: #087ac4;
+  background: #0879c4;
 }
 
 .swiper-slide h2 {

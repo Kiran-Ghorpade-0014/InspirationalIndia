@@ -18,3 +18,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@media print {
+  body{
+    visibility: hidden;
+  }
+
+  #report{
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}

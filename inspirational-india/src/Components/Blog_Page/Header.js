@@ -11,9 +11,9 @@ function Header(props) {
 
   const fetchStatus = () => {
     // setLike({ icon: "🤍", likeCount: 200 });
-    fetch(`http://localhost:8181/v1/isLiked/${props.blogId}/${user_id}`, {
+    fetch(`http://localhost:8181/v1/Like/isLiked/${props.blogId}/${user_id}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      // headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
         if (response.status === 200)

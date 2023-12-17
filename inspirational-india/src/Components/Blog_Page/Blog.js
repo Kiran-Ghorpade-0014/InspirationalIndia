@@ -102,7 +102,7 @@ export default function Blog() {
               </Grid> */}
             </main>
             <Footer
-              title="Inspiration India"
+              title="INSPIRATIONAL INDIA"
               description="Love India ❤️"
               sx={{ xs: { display: "none" } }}
             />

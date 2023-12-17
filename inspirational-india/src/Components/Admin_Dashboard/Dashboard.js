@@ -9,9 +9,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import {
-  DashboardOutlined
-} from "@mui/icons-material";
+import { DashboardOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -85,17 +83,32 @@ export default function Dashboard() {
                   Reports 🔻
                 </Button>
               </AccordionSummary>
-              <Box sx={{ mt: 2, mb: 2, pl:3, pr:3}}>
-                <Button fullWidth variant="contained">
+              <Box sx={{ mt: 2, mb: 2, pl: 3, pr: 3 }}>
+                <Button fullWidth variant="contained" href="/manage/reports/regionReport">
                   Region Report
                 </Button>
-                <Button fullWidth variant="contained" sx={{ mt: 2 }}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 2 }}
+                  href="/manage/reports/tribeReport"
+                >
                   Tribe Report
                 </Button>
-                <Button fullWidth variant="contained" sx={{ mt: 2 }}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 2 }}
+                  href="/manage/reports/blogReport"
+                >
                   Blog Report
                 </Button>
-                <Button fullWidth variant="contained" sx={{ mt: 2, }}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 2 }}
+                  href="/manage/reports/userReport"
+                >
                   Users Report
                 </Button>
               </Box>

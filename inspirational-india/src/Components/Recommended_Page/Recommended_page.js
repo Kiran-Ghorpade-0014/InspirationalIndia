@@ -3,15 +3,12 @@ import Typography from "@mui/material/Typography";
 import { Box, Container, Grid, Paper } from "@mui/material";
 import Card from "../Home_Page/Card";
 import { Link, useNavigate } from "react-router-dom";
-import Blog from "../Blog_Page/Blog";
+import Footer from "../Blog_Page/Footer";
 
-// function preventDefault(event) {
-//   event.preventDefault();
-// }
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8];
 
 export default function Recommended() {
+  const [cards, setCards] = React.useState([]);
+
   const navigate = useNavigate();
 
   if (sessionStorage.getItem("userType") === "null") {
@@ -32,6 +29,17 @@ export default function Recommended() {
     );
   }
 
+  const getCards = () => {
+    fetch("http://localhost:8181/v1/blog/allBlogs", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setCards(response);
+      })
+      .catch((err) => console.error(err));
+  };
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -78,18 +86,14 @@ export default function Recommended() {
                         justifyContent="center"
                         alignItems="center"
                       >
-                        {cards.map((card) => (
-                          <Grid
-                            key={card}
-                            item
-                            xs={12}
-                            md={3}
-                            xl={3}
-                          >
-                            <item>
-                            <Link to={`/blog/${card.blog_id}`}>
+                        {getCards()}
+                        {cards.slice(0,12).map((card) => (
+                          <Grid item xs={12} md={3} xl={3}>
+                            <item key={card.blog_id}>
+                              <Link to={`/blog/${card.blog_id}`}>
                                 <Card
-                                  image="/images/jaisalmer.jpg"
+                                  title={card.name}
+                                  image={"data:image/jpg;base64," + card.image}
                                   sx={{ md: "10px" }}
                                 />
                               </Link>
@@ -103,7 +107,7 @@ export default function Recommended() {
               </Grid>
             </Grid>
           </Container>
-          {/* <Footer color='white'/> */}
+          <Footer color='white'/>
         </Box>
       </Box>
     </>

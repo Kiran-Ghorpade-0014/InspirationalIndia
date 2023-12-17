@@ -13,10 +13,6 @@ function App() {
   return (
     <>
        <Home/>
-       {/* <ListItems
-              fetchUrl="http://localhost:8181/v1/region/allRegions"
-              TitleName="Region"
-            /> */}
     </>
   );
 }
