@@ -2,44 +2,42 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import { Box, Container, Grid, Paper } from "@mui/material";
 import Card from "../Home_Page/Card";
-import { Link, useNavigate } from "react-router-dom";
-import Footer from "../Blog_Page/Footer";
-
+import { Link } from "react-router-dom";
 
 export default function Recommended() {
+  // const navigate = useNavigate();
+
+  // if (sessionStorage.getItem("userType") === "null") {
+  //   navigate("/signin");
+  //   return (
+  //     <>
+  //       <Container
+  //         sx={{
+  //           display: "flex",
+  //           justifyContent: "center",
+  //           alignItems: "center",
+  //           height: "80vh",
+  //         }}
+  //       >
+  //         <Typography color="white">Sign In to access this Content</Typography>
+  //       </Container>
+  //     </>
+  //   );
+  // }
+
   const [cards, setCards] = React.useState([]);
 
-  const navigate = useNavigate();
-
-  if (sessionStorage.getItem("userType") === "null") {
-    navigate("/signin");
-    return (
-      <>
-        <Container
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "80vh",
-          }}
-        >
-          <Typography color="white">Sign In to access this Content</Typography>
-        </Container>
-      </>
-    );
-  }
-
-  const getCards = () => {
+  React.useEffect(() => {
     fetch("http://localhost:8181/v1/blog/allBlogs", {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
     })
       .then((response) => response.json())
       .then((response) => {
         setCards(response);
       })
       .catch((err) => console.error(err));
-  };
+  },[]);
+
   return (
     <>
       <Box sx={{ display: "flex" }}>
@@ -48,35 +46,36 @@ export default function Recommended() {
           sx={{
             flexGrow: 1,
             overflow: "auto",
-            // height:'100vh'
           }}
         >
           <Container maxWidth="lg" sx={{ mb: 0 }}>
-            <Grid container spacing={4}>
-              {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper
+            <Grid container alignItems="flex-start" justifyContent="flex-start">
+              {/* blogs*/}
+              <Grid item xs={12} md={12} xl={12}>
+              <Paper
                   sx={{
-                    p: 2,
+                    p: 5,
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
                     bgcolor: "#0f2027",
+                    // width: "60vw",
+                    // height: "85vh",
+                    overflow: "scroll",
                   }}
                 >
-                  <React.Fragment>
                     <Typography
                       component="h1"
                       variant="h5"
-                      pd="5"
+                      // pd="5"
+                      mt='10'
                       fontWeight="500"
                       color="White"
                       gutterBottom
                     >
                       Recommended Blogs
                     </Typography>
-                    <Grid />
                     <Grid item xs={12}>
                       <Grid
                         container
@@ -86,7 +85,6 @@ export default function Recommended() {
                         justifyContent="center"
                         alignItems="center"
                       >
-                        {getCards()}
                         {cards.slice(0,12).map((card) => (
                           <Grid item xs={12} md={3} xl={3}>
                             <item key={card.blog_id}>
@@ -102,12 +100,12 @@ export default function Recommended() {
                         ))}
                       </Grid>
                     </Grid>
-                  </React.Fragment>
+                  {/* </React.Fragment> */}
                 </Paper>
               </Grid>
             </Grid>
           </Container>
-          <Footer color='white'/>
+          {/* <Footer color='white'/> */}
         </Box>
       </Box>
     </>

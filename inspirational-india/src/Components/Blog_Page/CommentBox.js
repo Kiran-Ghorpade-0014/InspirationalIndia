@@ -1,13 +1,12 @@
 import * as React from "react";
-import { Box, TextField, Button,  Grid } from "@mui/material";
+import { Box, TextField, Button, Grid } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import MessageBox from "./MessageBox";
 
 function CommentBox(props) {
   //assigments
-  let input="";
+  const [input, setInput] = React.useState("");
   let isLogin = false;
-
   //check login setup
   if (sessionStorage.getItem("userType") === "USER") {
     isLogin = true;
@@ -42,15 +41,11 @@ function CommentBox(props) {
       } else {
         alert("Login Required...");
       }
+      setInput("");
+
     }
   };
 
-  //handle input change
-  const handleInputChange = (event) => {
-    input=event.target.value;
-  };
-
-  
   return (
     <Box
       sx={{
@@ -60,8 +55,7 @@ function CommentBox(props) {
         backgroundColor: "hotpink",
       }}
     >
-      <MessageBox/>
-
+      <MessageBox blogId={props.blogId} />
       <Box sx={{ p: 2, backgroundColor: "background.default" }}>
         <Grid container spacing={2}>
           <Grid item xs={9}>
@@ -69,7 +63,7 @@ function CommentBox(props) {
               fullWidth
               placeholder="Type a comment"
               value={input}
-              onChange={handleInputChange}
+              onChange={(e) => setInput(e.target.value)}
             />
           </Grid>
           <Grid item xs={3}>

@@ -1,59 +1,46 @@
 import * as React from "react";
-import { Box, Paper, Typography } from "@mui/material";
+import {  Box, Paper, Typography } from "@mui/material";
 
-export default function MessageBox() {
+export default function MessageBox(props) {
   //assignment
-  const [messages, setMessages] = React.useState([]);
-  let isLogin = false;
+  const [ListObject, setListObject] = React.useState([]);
+  let obj = [];
+  // let isLogin = false;
 
-  //check login setup
-  if (sessionStorage.getItem("userType") === "USER") {
-    isLogin = true;
-  } else if (sessionStorage.getItem("userType") === "ADMIN") {
-    isLogin = true;
-  } else {
-    isLogin = false;
-  }
-
-  //useEffect
   React.useEffect(() => {
-    if (!isLogin) {
-      setMessages([
-        { comment_id: 1, comment_text: "Login to See Comments", name: "Admin" },
-      ]);
-    } else {
-      fetch("http://localhost:8181/v1/comment/allComments", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
+    // console.log(props.fetchUrl)
+    fetch(`http://localhost:8181/v1/comment/${props.blogId}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setListObject(response.reverse());
+        // ListObject=response;
       })
-        .then((response) => response.json())
-        .then((response) => {
-          if (response != null) setMessages(response);
-          else
-            setMessages([
-              {
-                comment_id: 1,
-                comment_text: "No Comments Found",
-                name: "Admin",
-              }
-            ]);
-          console.log("im in fetch \nHere is data : \n" + messages);
-        })
-        .catch((err) => console.error(err));
-    }
-  },[isLogin, messages]);
+      .catch((err) => console.error(err));
+  }, []);
 
+
+  
   return (
-    <Box sx={{ flexGrow: 1, overflow: "auto", p: 2 }}>
-      {messages.map((message) => (
-        <Message key={message.comment_id} message={message} />
-      ))}
+    <Box sx={{ flexGrow: 1, overflow: "auto", p: 2, display:'flex', flexDirection:'column-reverse'}} >
+      {ListObject===null?ListObject.map((obj) => (
+        <>
+          <Message message={obj} />
+        </>
+      )):(
+          <>
+            <Typography color='black' sx={{justifyContent:'center'}}>No Comments Found</Typography>
+          </>
+      )
+      }
     </Box>
   );
 }
 
 function Message({ message }) {
-  console.log("Im in message " + message);
+  // console.log("Im in message " + message);
   return (
     <Box
       sx={{
@@ -69,10 +56,35 @@ function Message({ message }) {
           backgroundColor: "primary.light",
         }}
       >
-        <Typography variant="head">
-          {message.user_id ? message.user_id.usernamename : "Unknown"}:
+        <Typography
+          sx={{
+            fontSize: "10px",
+            fontWeight: "20px",
+            color:'blue'
+          }}
+        >
+           {message.user_id ? message.user_id.username : "Unknown"}:
         </Typography>
-        <Typography variant="body1">{message.comment_text}</Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: "20px",
+            fontWeight: "20px",
+            color:'red'
+          }}
+        >
+          {message.comment_text}
+        </Typography>
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: "10px",
+            fontWeight: "20px",
+            // font
+          }}
+        >
+          {new Date(message.comment_datetime).toString()}
+        </Typography>
       </Paper>
     </Box>
   );

@@ -20,6 +20,7 @@ import About from "../About/About";
 import ErrorPage from "../Error_page/ErrorPage";
 import Reports from "../Admin_Dashboard/Reports";
 
+
 function Home() {
   const style = {
     backgroundColor: "#264651",
@@ -30,6 +31,7 @@ function Home() {
     flexDirection: "column",
     justifyItems: "space-evenly",
   };
+
 
   return (
     <>
