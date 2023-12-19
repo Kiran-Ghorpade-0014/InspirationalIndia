@@ -72,7 +72,7 @@ export default function TribeReport() {
                 <TableCell>{row.tribe_id}</TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>
-                  {row.region ? row.region.name : "no region found"}
+                  {row.region_id ? row.region_id.name : "no region found"}
                 </TableCell>
                 <TableCell>{row.description}</TableCell>
               </TableRow>

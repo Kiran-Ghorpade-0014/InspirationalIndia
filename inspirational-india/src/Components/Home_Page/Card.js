@@ -33,7 +33,7 @@ export default function MediaCard(props) {
             // // backgroundRepeat: "no-repeat",
             // // backgroundSize: "cover",
           }}
-          image={props.image}
+          image={props.image?props.image:"public\images\north_east_india.jpg"}
           title={props.name}
         />
       </Card>

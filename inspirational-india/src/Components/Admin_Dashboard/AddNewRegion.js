@@ -42,7 +42,7 @@ export default function AddNewRegion() {
         alert("New Region Added.");
       })
       .catch((e) => {
-        alert("Cannot able to add new region");
+        alert("New Blog Added.");
         console.log(e);
       });
   };

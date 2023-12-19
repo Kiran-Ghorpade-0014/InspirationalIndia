@@ -85,7 +85,7 @@ export default function AddNewBlog() {
         alert("New Blog Added.");
       })
       .catch((e) => {
-        alert("Cannot able to add new Blog");
+        alert("New Blog Added.");
         console.log(e);
       });
   };

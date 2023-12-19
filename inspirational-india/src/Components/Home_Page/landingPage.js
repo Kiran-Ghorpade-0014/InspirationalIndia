@@ -25,7 +25,7 @@ function LandingPage() {
     description: "Welcome to Cultural Repository",
   };
   const [region, setRegion] = useState(temp);
-  const intervalTime = 5000;
+  const intervalTime = 3000;
   const navigate = useNavigate();
   // const totalCards = 8;
 

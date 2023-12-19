@@ -7,15 +7,16 @@ import {
   List,
   ListItemButton,
   Paper,
+  selectClasses,
 } from "@mui/material";
 import Card from "../Home_Page/Card";
 import { Link } from "react-router-dom";
 import { ListDivider } from "@mui/joy";
 
-
 export default function Explore() {
   const [regions, setRegions] = React.useState([]);
   const [cards, setCards] = React.useState([]);
+  const [selectedRegion, setSelectedRegion] = React.useState([]);
 
   React.useEffect(() => {
     fetch("http://localhost:8181/v1/region/allRegions", {
@@ -25,14 +26,16 @@ export default function Explore() {
       .then((response) => response.json())
       .then((response) => {
         setRegions(response);
+        // selectedRegion===null?(regions?setSelectedRegion(regions[0]):setSelectedRegion(null)):setRegions(null);
       })
       .catch((err) => console.error(err));
   }, []);
 
-  const handleClick = (selectedRegion) => {
+  const handleClick = (region) => {
+    setSelectedRegion(region);
     fetch(
       "http://localhost:8181/v1/blog/getBlogByRegion/" +
-        selectedRegion.region_id,
+        region.region_id,
       {
         method: "GET",
       }
@@ -104,6 +107,39 @@ export default function Explore() {
                     overflow: "scroll",
                   }}
                 >
+                  <Container maxWidth="lg" sx={{ mb: 0 }}>
+                    <Paper
+                      sx={{
+                        p: 2,
+                        md: 10,
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "start",
+                        bgcolor: "white",
+                        color: "#0f2027",
+                      }}
+                    >
+                      <React.Fragment>
+                        <Typography
+                          component="h1"
+                          variant="h5"
+                          fontFamily="monospace"
+                        >
+                          About :
+                        </Typography>
+                        <Typography
+                          component="h1"
+                          variant="h6"
+                          color="#0f2027"
+                          fontSize=""
+                        >
+                          {selectedRegion ? selectedRegion.description : ""}
+                          <br />
+                        </Typography>
+                      </React.Fragment>
+                    </Paper>
+                  </Container>
                   <React.Fragment>
                     <Typography
                       component="h1"
@@ -113,6 +149,7 @@ export default function Explore() {
                       color="White"
                       gutterBottom
                     >
+                      <br/>
                       Blogs
                     </Typography>
                     <Grid />
@@ -126,7 +163,7 @@ export default function Explore() {
                         alignItems="center"
                       >
                         {cards.map((card) => (
-                          <Grid item xs={12} md={3} xl={3}>
+                          <Grid item xs={12} md={4} xl={4}>
                             <item key={card.blog_id}>
                               <Link to={`/blog/${card.blog_id}`}>
                                 <Card

@@ -68,7 +68,7 @@ export default function Blog() {
               <Paper
                 sx={{
                   position: "relative",
-                  backgroundColor: "#700089",
+                  backgroundColor: "rgba(0,0,0,0.2)",
                   color: "#fff",
                   mb: 4,
                 }}

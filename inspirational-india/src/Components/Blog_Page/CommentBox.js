@@ -52,11 +52,11 @@ function CommentBox(props) {
         height: "70vh",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "hotpink",
+        backgroundColor: "rgba(255,255,255,0.2)",
       }}
     >
       <MessageBox blogId={props.blogId} />
-      <Box sx={{ p: 2, backgroundColor: "background.default" }}>
+      <Box sx={{ p: 2, backgroundColor: "rgba(255,255,255,0.8)" }}>
         <Grid container spacing={2}>
           <Grid item xs={9}>
             <TextField

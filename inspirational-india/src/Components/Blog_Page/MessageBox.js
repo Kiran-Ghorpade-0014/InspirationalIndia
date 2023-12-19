@@ -4,7 +4,6 @@ import {  Box, Paper, Typography } from "@mui/material";
 export default function MessageBox(props) {
   //assignment
   const [ListObject, setListObject] = React.useState([]);
-  let obj = [];
   // let isLogin = false;
 
   React.useEffect(() => {
@@ -25,7 +24,7 @@ export default function MessageBox(props) {
   
   return (
     <Box sx={{ flexGrow: 1, overflow: "auto", p: 2, display:'flex', flexDirection:'column-reverse'}} >
-      {ListObject===null?ListObject.map((obj) => (
+      {ListObject?ListObject.map((obj) => (
         <>
           <Message message={obj} />
         </>
@@ -53,14 +52,14 @@ function Message({ message }) {
         variant="outlined"
         sx={{
           p: 1,
-          backgroundColor: "primary.light",
+          backgroundColor: "#c8d5df",
         }}
       >
         <Typography
           sx={{
             fontSize: "10px",
             fontWeight: "20px",
-            color:'blue'
+            color:'#00162b'
           }}
         >
            {message.user_id ? message.user_id.username : "Unknown"}:
