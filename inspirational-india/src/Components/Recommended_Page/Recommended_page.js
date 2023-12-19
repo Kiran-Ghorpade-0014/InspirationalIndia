@@ -46,6 +46,7 @@ export default function Recommended() {
           sx={{
             flexGrow: 1,
             overflow: "auto",
+            height: '85vh'
           }}
         >
           <Container maxWidth="lg" sx={{ mb: 0 }}>
@@ -62,7 +63,7 @@ export default function Recommended() {
                     bgcolor: "#0f2027",
                     // width: "60vw",
                     // height: "85vh",
-                    overflow: "scroll",
+                    // overflow: "scroll",
                   }}
                 >
                     <Typography
