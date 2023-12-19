@@ -152,12 +152,12 @@ function LandingPage() {
                   key={card.blog_id}
                   item
                   xs={12}
-                  md={6}
-                  xl={6}
+                  md={4}
+                  xl={4}
                 >
                   <Link to={`/blog/${card.blog_id}`}>
                     <Card
-                      title={card.name}
+                      title=''
                       image={"data:image/png;base64," + card.image}
                     />
                   </Link>

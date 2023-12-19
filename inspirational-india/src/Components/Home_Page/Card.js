@@ -2,41 +2,38 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 // import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardContent, CardMedia } from "@mui/material";
+import { CardContent, CardMedia, Container } from "@mui/material";
 
 export default function MediaCard(props) {
   return (
     <>
-      <Card
+      <Container
         sx={{
           width: 180,
-          maxWidth: 250,
-          height: 200,
-          backgroundColor: "white",
+          mb: 2
         }}
       >
-        {/* <CardContent>
-          <Typography
-            gutterBottom
-            variant="title"
-            component="div"
-            color="black"
-          >
-            {props.title}
-          </Typography>
-        </CardContent> */}
-        <CardMedia
+        <Card
           sx={{
-            height: 200,
             width: 180,
-            // backgroundPosition: "center",
-            // // backgroundRepeat: "no-repeat",
-            // // backgroundSize: "cover",
+            maxWidth: 250,
+            height: 200,
+            backgroundColor: "white",
           }}
-          image={props.image?props.image:"public\images\north_east_india.jpg"}
-          title={props.name}
-        />
-      </Card>
+        >
+          <CardMedia
+            sx={{
+              height: 200,
+              width: 180
+            }}
+            image={
+              props.image ? props.image : "publicimages\north_east_india.jpg"
+            }
+            title={props.name}
+          />
+        </Card>
+        <Typography sx={{color:'white', fontFamily:'monospace'}}>{props.title}</Typography>
+      </Container>
     </>
   );
 }
