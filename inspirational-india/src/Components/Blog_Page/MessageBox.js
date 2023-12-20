@@ -3,22 +3,30 @@ import {  Box, Paper, Typography } from "@mui/material";
 
 export default function MessageBox(props) {
   //assignment
+
   const [ListObject, setListObject] = React.useState([]);
   // let isLogin = false;
 
+  function updateMessages() {
+      if (props.flag) {
+        props.updateFlag();
+        fetch("http://"+window.location.host.split(':')[0]+`:8181/v1/comment/${props.blogId}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((response) => response.json())
+          .then((response) => {
+            setListObject(response.reverse());
+            // ListObject=response;
+          })
+          .catch((err) => console.error(err));
+      }
+  }
+
   React.useEffect(() => {
     // console.log(props.fetchUrl)
-    fetch(`http://localhost:8181/v1/comment/${props.blogId}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        setListObject(response.reverse());
-        // ListObject=response;
-      })
-      .catch((err) => console.error(err));
-  }, []);
+        updateMessages()
+  });
 
 
   

@@ -6,20 +6,13 @@ import MessageBox from "./MessageBox";
 function CommentBox(props) {
   //assigments
   const [input, setInput] = React.useState("");
-  let isLogin = false;
-  //check login setup
-  if (sessionStorage.getItem("userType") === "USER") {
-    isLogin = true;
-  } else if (sessionStorage.getItem("userType") === "ADMIN") {
-    isLogin = true;
-  } else {
-    isLogin = false;
-  }
+  const [isCommented, setIsCommented] = React.useState(true);
+
 
   //handle send comment
   const handleSend = () => {
     if (input.trim() !== "") {
-      if (isLogin) {
+      if (props.isLogin) {
         const user = sessionStorage.getItem("userDetails");
 
         const formData = new FormData();
@@ -28,12 +21,13 @@ function CommentBox(props) {
         formData.append("blog_id", props.blogId);
         console.log(formData);
 
-        fetch("http://localhost:8181/v1/comment/add", {
+        fetch("http://"+window.location.host.split(':')[0]+":8181/v1/comment/add", {
           method: "POST",
           body: formData,
         })
           .then((response) => {
             if (response.status === 201) alert("Commented Successfully...");
+            setIsCommented(true);
           })
           .catch(() => {
             alert("Exception Occured.");
@@ -42,7 +36,6 @@ function CommentBox(props) {
         alert("Login Required...");
       }
       setInput("");
-
     }
   };
 
@@ -53,9 +46,10 @@ function CommentBox(props) {
         display: "flex",
         flexDirection: "column",
         backgroundColor: "rgba(255,255,255,0.2)",
+        mb:'5px'
       }}
     >
-      <MessageBox blogId={props.blogId} />
+      <MessageBox blogId={props.blogId} flag={isCommented} updateFlag={()=>setIsCommented(false)}/>
       <Box sx={{ p: 2, backgroundColor: "rgba(255,255,255,0.8)" }}>
         <Grid container spacing={2}>
           <Grid item xs={9}>

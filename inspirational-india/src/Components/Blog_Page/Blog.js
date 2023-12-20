@@ -16,7 +16,7 @@ import CommentBox from "./CommentBox";
 
 const defaultTheme = createTheme();
 
-export default function Blog() {
+export default function Blog(props) {
   const { blog_Id } = useParams();
   const [blog, setBlog] = React.useState([]);
 
@@ -29,7 +29,7 @@ export default function Blog() {
   };
 
   React.useEffect(() => {
-    fetch("http://localhost:8181/v1/blog/getBlog/"+blog_Id, {
+    fetch("http://"+window.location.host.split(':')[0]+":8181/v1/blog/getBlog/"+blog_Id, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -42,8 +42,8 @@ export default function Blog() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container maxWidth="lg">
-        <Header title="Blog" blogId={blog_Id} />
+      <Container maxWidth="lg" sx={{mt:{xs:5, ls:0, mx:0}}}>
+        <Header title="Blog" blogId={blog_Id}/>
         <Grid
           container
           display="flex"
@@ -108,7 +108,7 @@ export default function Blog() {
             />
           </Grid>
           <Grid item xs={12} md={4} xl={4}>
-            <CommentBox blogId={blog_Id}/>
+            <CommentBox blogId={blog_Id} isLogin={props.isLogin}/>
           </Grid>
         </Grid>
       </Container>

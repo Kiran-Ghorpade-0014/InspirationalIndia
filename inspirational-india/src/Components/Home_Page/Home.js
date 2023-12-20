@@ -19,9 +19,13 @@ import SignOut from "../SignIn_Page/SignOut";
 import About from "../About/About";
 import ErrorPage from "../Error_page/ErrorPage";
 import Reports from "../Admin_Dashboard/Reports";
+import { useState } from "react";
 
 
 function Home() {
+
+  const [isLogin, setIsLogin] = useState(false);
+
   const style = {
     backgroundColor: "#264651",
     overflowY: "scroll",
@@ -37,25 +41,29 @@ function Home() {
     <>
       <Router>
         <div style={style}>
-          <Appbar />
+          <Appbar flag={isLogin} />
 
           <div>
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/ErrorPage" element={<ErrorPage />} />
-              <Route path="/recommended" element={<Recommended />} />
-              <Route path="/blog/:blog_Id" element={<Blog />} />
+              <Route path="/recommended" element={<Recommended isLogin={isLogin}/>} />
+              <Route path="/blog/:blog_Id" element={<Blog isLogin={isLogin}/>} />
               <Route path="/about" element={<About />} />
               <Route path="/explore" element={<Explore />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/admin/signin" element={<SignIn />} />
-              <Route path="/signin" element={<UserSignIn />} />
-              <Route path="/signout" element={<SignOut/>} />
               <Route path="/registration" element={<Registration />} />
-              <Route path="/manage/blog" element={<AddNewBlog />} />
-              <Route path="/manage/region" element={<AddNewRegion />} />
-              <Route path="/manage/tribe" element={<AddNewTribe />} />
-              <Route path="/manage/reports/:type" element={<Reports />} />
+
+              {/* Dashboard */}
+              <Route path="/dashboard" element={<Dashboard isLogin={isLogin}/>} />
+              <Route path="/manage/blog" element={<AddNewBlog isLogin={isLogin}/>} />
+              <Route path="/manage/region" element={<AddNewRegion isLogin={isLogin}/>} />
+              <Route path="/manage/tribe" element={<AddNewTribe isLogin={isLogin}/>} />
+              <Route path="/manage/reports/:type" element={<Reports isLogin={isLogin}/>} />
+
+              {/* Sign In - Sign Out Manager */}
+              <Route path="/admin/signin" element={<SignIn updateFlag={()=>setIsLogin(true)}/>} />
+              <Route path="/signin" element={<UserSignIn updateFlag={()=>setIsLogin(true)}/>} />
+              <Route path="/signout" element={<SignOut updateFlag={()=>setIsLogin(false)}/>} />
             </Routes>
           </div>
         </div>

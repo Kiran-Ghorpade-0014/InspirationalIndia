@@ -14,7 +14,7 @@ export default function UserReport() {
   const [rows, setRows] = React.useState([]);
 
   React.useEffect(() => {
-    fetch("http://localhost:8181/v1/user/allUsers", {
+    fetch("http://"+window.location.host.split(':')[0]+":8181/v1/user/allUsers", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -24,7 +24,7 @@ export default function UserReport() {
       })
       .catch((err) => console.error(err));
   }, []);
-  console.log(rows);
+  // console.log(rows);
 
   return (
     <React.Fragment>

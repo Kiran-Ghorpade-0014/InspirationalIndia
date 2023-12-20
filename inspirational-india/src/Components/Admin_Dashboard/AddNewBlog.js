@@ -15,13 +15,12 @@ import {
   MenuItem,
 } from "@mui/material";
 import ListItems from "./ListItems";
+import { Link } from "react-router-dom";
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
-export default function AddNewBlog() {
-    sessionStorage.setItem("userType","ADMIN");
-
+export default function AddNewBlog(props) {
   const [Regions, setRegions] = React.useState([]);
   const [Tribes, setTribes] = React.useState([]);
   const [region, setRegion] = React.useState("");
@@ -29,13 +28,17 @@ export default function AddNewBlog() {
   const [name, setBlogTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [image, setImage] = React.useState(null);
-  
 
   React.useEffect(() => {
-    fetch("http://localhost:8181/v1/region/allRegions", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      "http://" +
+        window.location.host.split(":")[0] +
+        ":8181/v1/region/allRegions",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((response) => response.json())
       .then((response) => {
         setRegions(response);
@@ -46,10 +49,16 @@ export default function AddNewBlog() {
   const fetchTribe = (event) => {
     setRegion(event.target.value);
     let selectedRegion = event.target.value;
-    let region_id = selectedRegion.region_id?selectedRegion.region_id:0;
-    fetch("http://localhost:8181/v1/tribe/getTribeByRegion/"+region_id, {
-      method: "GET"
-    })
+    let region_id = selectedRegion.region_id ? selectedRegion.region_id : 0;
+    fetch(
+      "http://" +
+        window.location.host.split(":")[0] +
+        ":8181/v1/tribe/getTribeByRegion/" +
+        region_id,
+      {
+        method: "GET",
+      }
+    )
       .then((response) => response.json())
       .then((response) => {
         setTribes(response);
@@ -57,7 +66,6 @@ export default function AddNewBlog() {
       .catch((err) => console.error(err));
   };
 
-  
   const handleImageChange = (event) => {
     // Handle image selection
     setImage(event.target.files[0]);
@@ -65,32 +73,39 @@ export default function AddNewBlog() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(name === '' || region === '' || tribe === '' || description === ''){
-      return;
+
+    if (props.isLogin) {
+      if (name === "" || region === "" || tribe === "" || description === "") {
+        return;
+      }
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("region", region.region_id);
+      formData.append("tribe", tribe.tribe_id);
+      formData.append("description", description);
+      formData.append("image", image); // Append the image to the form data
+
+      fetch(
+        "http://" + window.location.host.split(":")[0] + ":8181/v1/blog/add",
+        {
+          method: "POST",
+          body: formData,
+        }
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          if (response === undefined)
+            alert("Serve error \n try After some time");
+          alert("New Blog Added.");
+        })
+        .catch((e) => {
+          alert("New Blog Added.");
+          console.log(e);
+        });
+    } else {
+      alert("sign in to add blog");
     }
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("region", region.region_id);
-    formData.append("tribe", tribe.tribe_id);
-    formData.append("description", description);
-    formData.append("image", image); // Append the image to the form data
-
-    fetch("http://localhost:8181/v1/blog/add", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response === undefined) alert("Serve error \n try After some time");
-        alert("New Blog Added.");
-      })
-      .catch((e) => {
-        alert("New Blog Added.");
-        console.log(e);
-      });
   };
-
-
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -210,9 +225,10 @@ export default function AddNewBlog() {
                           fullWidth
                           variant="contained"
                           sx={{ mb: 2 }}
-                          href="/dashboard"
                         >
-                          Cancel
+                          <Link to="/dashboard" style={{ color: "white" }}>
+                            Cancel
+                          </Link>
                         </Button>
                       </Box>
                     </Box>
@@ -222,7 +238,11 @@ export default function AddNewBlog() {
             </Grid>
             {/* Search Region */}
             <ListItems
-              fetchUrl="http://localhost:8181/v1/blog/allBlogs"
+              fetchUrl={
+                "http://" +
+                window.location.host.split(":")[0] +
+                ":8181/v1/blog/allBlogs"
+              }
               TitleName="Blog"
             />
           </Grid>

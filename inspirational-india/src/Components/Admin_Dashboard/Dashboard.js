@@ -10,14 +10,14 @@ import {
   Typography,
 } from "@mui/material";
 import { DashboardOutlined } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const navigate = useNavigate();
-  if (sessionStorage.getItem("userType") !== "ADMIN") {
+  if (!props.isLogin) {
     navigate("/admin/signin");
   }
 
@@ -45,71 +45,59 @@ export default function Dashboard() {
             Dashboard
           </Typography>
           <Box noValidate sx={{ mt: 1 }}>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3 }}
-              href="/manage/blog"
-            >
-              Manage Blogs
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
+              <Link to="/manage/blog" style={{ color: "white" }}>
+                Manage Blogs
+              </Link>
             </Button>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3 }}
-              href="/manage/region"
-            >
-              Manage Regions
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
+              <Link to="/manage/Region" style={{ color: "white" }}>
+                Manage Regions
+              </Link>
             </Button>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3 }}
-              href="/manage/tribe"
-            >
-              Manage Tribes
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
+              <Link to="/manage/tribe" style={{ color: "white" }}>
+                Manage Tribes
+              </Link>
             </Button>
             <Accordion sx={{ mt: 2, mb: 5 }}>
               <AccordionSummary>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  // href="/manage/reports"
-                >
+                <Button type="submit" fullWidth variant="contained">
                   Reports 🔻
                 </Button>
               </AccordionSummary>
               <Box sx={{ mt: 2, mb: 2, pl: 3, pr: 3 }}>
-                <Button fullWidth variant="contained" href="/manage/reports/regionReport">
-                  Region Report
+                <Button fullWidth variant="contained">
+                  <Link
+                    to="/manage/reports/regionReport"
+                    style={{ color: "white" }}
+                  >
+                    Region Report
+                  </Link>
                 </Button>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 2 }}
-                  href="/manage/reports/tribeReport"
-                >
-                  Tribe Report
+                <Button fullWidth variant="contained" sx={{ mt: 2 }}>
+                  <Link
+                    to="/manage/reports/tribeReport"
+                    style={{ color: "white" }}
+                  >
+                    Tribe Report
+                  </Link>
                 </Button>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 2 }}
-                  href="/manage/reports/blogReport"
-                >
-                  Blog Report
+                <Button fullWidth variant="contained" sx={{ mt: 2 }}>
+                  <Link
+                    to="/manage/reports/blogReport"
+                    style={{ color: "white" }}
+                  >
+                    Blog Report
+                  </Link>
                 </Button>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 2 }}
-                  href="/manage/reports/userReport"
-                >
-                  Users Report
+                <Button fullWidth variant="contained" sx={{ mt: 2 }}>
+                  <Link
+                    to="/manage/reports/userReport"
+                    style={{ color: "white" }}
+                  >
+                    Users Report
+                  </Link>
                 </Button>
               </Box>
             </Accordion>

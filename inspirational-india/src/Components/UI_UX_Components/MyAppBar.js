@@ -16,23 +16,21 @@ import { Link } from "react-router-dom";
 const pages = ["Explore", "About", "Recommended"];
 let settings = ["SignOut"];
 const choice = ["SignIn"];
-let isLogin = false;
 
-export default function MyAppBar() {
-  let username = "Rutik";
+export default function MyAppBar(props) {
+  let username = "";
   // username
 
   function updateUsername() {
-    if (sessionStorage.getItem("userType") === "USER") {
-      isLogin = true;
-      username=sessionStorage.getItem("username");
-      // setUsername(sessionStorage.getItem("username"));
-    } else if (sessionStorage.getItem("userType") === "ADMIN") {
-      isLogin = true;
-      username = "ADMIN";
-      settings= ["Dashboard","SignOut"]
-    } else {
-      isLogin = false;
+    if (props.flag) {
+      if (sessionStorage.getItem("userType") === "USER") {
+        username = sessionStorage.getItem("username");
+        // setUsername(sessionStorage.getItem("username"));
+      } else if (sessionStorage.getItem("userType") === "ADMIN") {
+        username = "ADMIN";
+        settings = ["Dashboard", "SignOut"];
+      } else {
+      }
     }
   }
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -63,7 +61,6 @@ export default function MyAppBar() {
             variant="h5"
             // noWrap
             component="a"
-            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -77,7 +74,9 @@ export default function MyAppBar() {
               textAlign: "center",
             }}
           >
-            Inspirational India
+            <Link to="/" style={{ color: "white" }}>
+              Inspirational India
+            </Link>
           </Typography>
 
           {/* Navigation Buttons */}
@@ -114,7 +113,7 @@ export default function MyAppBar() {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 3 }}>
                 <Avatar alt="Remy Sharp" src="#" />
                 <Typography color="white" variant="h6" sx={{ ml: 2 }}>
-                  {isLogin ? "Hello," +  username  + "!" : "Sign In"}
+                  {props.flag ? "Hello," + username + "!" : "Sign In"}
                 </Typography>
               </IconButton>
             </Tooltip>
@@ -134,7 +133,7 @@ export default function MyAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {(isLogin === true ? settings : choice).map((setting) => (
+              {(props.flag ? settings : choice).map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   {/* <Typography textAlign="center">{setting}</Typography> */}
                   <Link to={"user/" + setting}>
@@ -200,7 +199,6 @@ export default function MyAppBar() {
             variant="h5"
             Wrap
             component="a"
-            href="/"
             sx={{
               mr: 1,
               display: { xs: "flex", md: "none" },
@@ -214,7 +212,9 @@ export default function MyAppBar() {
               textAlign: "center",
             }}
           >
-            Inspirational India
+            <Link to="/" style={{ color: "white" }}>
+              Inspirational India
+            </Link>
           </Typography>
 
           {/* MinWidth Profile Icon */}
@@ -240,7 +240,7 @@ export default function MyAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {(isLogin === true ? settings : choice).map((setting) => (
+              {(props.flag ? settings : choice).map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   {/* <Typography textAlign="center">{setting}</Typography> */}
                   <Link to={"" + setting}>

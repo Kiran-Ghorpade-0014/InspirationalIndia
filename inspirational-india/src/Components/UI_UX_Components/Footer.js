@@ -15,7 +15,7 @@ function Footer(props) {
         sx={{ pt: 5 }}
       >
         {"Copyright © "}
-        <Link color="inherit" href="./">
+        <Link color="inherit" to="/">
           Inspirational India
         </Link>{" "}
         {new Date().getFullYear()}

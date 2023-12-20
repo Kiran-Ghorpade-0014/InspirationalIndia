@@ -1,12 +1,12 @@
 // import * as React from "react";
 import React, { useState, useEffect } from "react";
-import { Grid, Typography } from "@mui/material";
+import { CardMedia, Grid, Typography } from "@mui/material";
 import Button from "@mui/joy/Button/Button";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import Footer from "../UI_UX_Components/Footer";
 import { Link, useNavigate } from "react-router-dom";
+import MuiCard from "@mui/material/Card";
 import Card from "../Home_Page/Card";
-// import Blog from "../Blog_Page/Blog";
 
 function LandingPage() {
   const page_style = {
@@ -18,11 +18,14 @@ function LandingPage() {
 
   const [regions, setRegions] = React.useState([]);
   const [cards, setCards] = React.useState([]);
+  const [isFirst, setIsFirst] = useState(true);
 
   const [titleIndex, setTitleIndex] = useState(0);
   const temp = {
+    blog_id: -2,
     name: "Inspirational India",
     description: "Welcome to Cultural Repository",
+    image: "../../../incredible-india.jpg",
   };
   const [region, setRegion] = useState(temp);
   const intervalTime = 3000;
@@ -32,20 +35,27 @@ function LandingPage() {
   // setRegion(temp);
 
   React.useEffect(() => {
-    fetch("http://localhost:8181/v1/region/allRegions", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      "http://" +
+        window.location.host.split(":")[0] +
+        ":8181/v1/region/allRegions",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .then((response) => response.json())
       .then((response) => {
         setRegions(response);
       })
-      .catch(()=> navigate("/ErrorPage"))
+      .catch(() => navigate("/ErrorPage"));
   }, [navigate]);
 
   const fetchBlogs = (selectedRegion) => {
     fetch(
-      "http://localhost:8181/v1/blog/getBlogByRegion/" +
+      "http://" +
+        window.location.host.split(":")[0] +
+        ":8181/v1/blog/getBlogByRegion/" +
         selectedRegion.region_id,
       {
         method: "GET",
@@ -55,7 +65,7 @@ function LandingPage() {
       .then((response) => {
         setCards(response);
       })
-      .catch(()=> navigate("/ErrorPage"))
+      .catch(() => navigate("/ErrorPage"));
   };
 
   useEffect(() => {
@@ -64,6 +74,7 @@ function LandingPage() {
       setTitleIndex((prevIndex) => (prevIndex + 1) % regions.length);
       setRegion(regions[titleIndex]);
       fetchBlogs(regions[titleIndex]);
+      setIsFirst(false);
     }, intervalTime);
     return () => clearInterval(interval);
   }, [titleIndex, regions]);
@@ -91,42 +102,48 @@ function LandingPage() {
               >
                 <div>
                   <Grid item>
-                    <item>
-                      {/* Title */}
-                      <Typography variant="h3" sx={{ fontWeight: 900 }}>
-                        {/* MALABAR */}
-                        {region.name}
-                      </Typography>
-                    </item>
+                    {/* Title */}
+                    <Typography
+                      variant="h3"
+                      sx={{
+                        fontWeight: 900,
+                        textAlign: { lg: "justify", xs: "center" },
+                      }}
+                    >
+                      {/* MALABAR */}
+                      {region.name}
+                    </Typography>
                   </Grid>
                   <Grid item>
-                    <item>
-                      {/* Description */}
-                      <Typography
-                        sx={{
-                          height: "20vh",
-                          width: "40vw",
-                          textAlign: "justify",
-                          fontWeight: "150",
-                        }}
-                      >
-                        {region.description}
-                      </Typography>
-                    </item>
+                    {/* Description */}
+                    <Typography
+                      sx={{
+                        height: "20vh",
+                        width: { lg: "40vw", mx: "90vw", xs: "90vw" },
+                        textAlign: { lg: "justify", xs: "center" },
+                        fontWeight: "150",
+                        mb: { xs: "10px" },
+                      }}
+                    >
+                      {region.description}
+                    </Typography>
                   </Grid>
-                  <Grid item>
-                    <item>
-                      {/* Button */}
-                      <Button variant="solid" size="lg" color="primary">
-                        <Link to="/explore">
-                          <Typography
-                            sx={{ textDecoration: "none", color: "white" }}
-                          >
-                            Explore
-                          </Typography>
-                        </Link>
-                      </Button>
-                    </item>
+                  <Grid
+                    item
+                    sx={{
+                      display: "flex",
+                      justifyContent: { xs: "center", lg: "start" },
+                    }}
+                  >
+                    <Button variant="solid" size="lg" color="primary">
+                      <Link to="/explore">
+                        <Typography
+                          sx={{ textDecoration: "none", color: "white" }}
+                        >
+                          Explore
+                        </Typography>
+                      </Link>
+                    </Button>
                   </Grid>
                 </div>
               </Grid>
@@ -147,22 +164,35 @@ function LandingPage() {
                 md: "10%",
               }}
             >
-              {cards.slice(0, 6).map((card) => (
-                <Grid2
-                  key={card.blog_id}
-                  item
-                  xs={12}
-                  md={4}
-                  xl={4}
+              {isFirst ? (
+                <MuiCard
+                  sx={{
+                    width: "60vw",
+                    backgroundColor: "white",
+                  }}
                 >
-                  <Link to={`/blog/${card.blog_id}`}>
-                    <Card
-                      title=''
-                      image={"data:image/png;base64," + card.image}
-                    />
-                  </Link>
-                </Grid2>
-              ))}
+                  <CardMedia
+                    component="img"
+                    height="400"
+                    image="../../../incredible-india.jpg"
+                    alt="Inspirational India"
+                  />
+                </MuiCard>
+              ) : (
+                <>
+                  {cards.slice(0, 6).map((card) => (
+                    <Grid2 key={card.blog_id} item xs={12} md={4} xl={4}>
+                      <Link to={`/blog/${card.blog_id}`}>
+                        {console.log(card.blog_id)}
+                        <Card
+                          title=""
+                          image={"data:image/png;base64," + card.image}
+                        />
+                      </Link>
+                    </Grid2>
+                  ))}
+                </>
+              )}
             </Grid2>
           </Grid2>
           <Footer color="white" />

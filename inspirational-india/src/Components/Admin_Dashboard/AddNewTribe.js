@@ -15,11 +15,12 @@ import {
   Select,
 } from "@mui/material";
 import ListItems from "../Admin_Dashboard/ListItems";
+import { Link } from "react-router-dom";
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
-export default function AddNewTribe() {
+export default function AddNewTribe(props) {
   sessionStorage.setItem("userType", "ADMIN");
 
   const [Regions, setRegions] = React.useState([]);
@@ -39,30 +40,38 @@ export default function AddNewTribe() {
       })
       .catch((err) => console.error(err));
   }, []);
-    
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(name === '' || region === '' || description === ''){
-      return;
-    }
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("region", region.region_id);
-    formData.append("description", description);
+    if (props.isLogin) {
+      if (name === "" || region === "" || description === "") {
+        return;
+      }
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("region", region.region_id);
+      formData.append("description", description);
 
-    fetch("http://localhost:8181/v1/tribe/add", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response === undefined) alert("Serve error \n try After some time");
-        alert("New Blog Added.");
-      })
-      .catch((e) => {
-        alert("New Blog Added.");
-        console.log(e);
-      });
+      fetch(
+        "http://" + window.location.host.split(":")[0] + ":8181/v1/tribe/add",
+        {
+          method: "POST",
+          body: formData,
+        }
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          if (response === undefined)
+            alert("Serve error \n try After some time");
+          alert("New Blog Added.");
+        })
+        .catch((e) => {
+          alert("New Blog Added.");
+          console.log(e);
+        });
+    } else {
+      alert("sign in to add blog");
+    }
   };
 
   return (
@@ -165,9 +174,10 @@ export default function AddNewTribe() {
                           fullWidth
                           variant="contained"
                           sx={{ mb: 2 }}
-                          href="/dashboard"
                         >
-                          Cancel
+                          <Link to="/dashboard" style={{ color: "white" }}>
+                            Cancel
+                          </Link>
                         </Button>
                       </Box>
                     </Box>
@@ -177,7 +187,11 @@ export default function AddNewTribe() {
             </Grid>
             {/* Search Region */}
             <ListItems
-              fetchUrl="http://localhost:8181/v1/tribe/allTribes"
+              fetchUrl={
+                "http://" +
+                window.location.host.split(":")[0] +
+                ":8181/v1/tribe/allTribes"
+              }
               TitleName="Tribe"
             />
           </Grid>

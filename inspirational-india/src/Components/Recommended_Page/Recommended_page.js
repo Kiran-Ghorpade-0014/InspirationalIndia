@@ -4,27 +4,7 @@ import { Box, Container, Grid, Paper } from "@mui/material";
 import Card from "../Home_Page/Card";
 import { Link } from "react-router-dom";
 
-export default function Recommended() {
-  // const navigate = useNavigate();
-
-  // if (sessionStorage.getItem("userType") === "null") {
-  //   navigate("/signin");
-  //   return (
-  //     <>
-  //       <Container
-  //         sx={{
-  //           display: "flex",
-  //           justifyContent: "center",
-  //           alignItems: "center",
-  //           height: "80vh",
-  //         }}
-  //       >
-  //         <Typography color="white">Sign In to access this Content</Typography>
-  //       </Container>
-  //     </>
-  //   );
-  // }
-
+export default function Recommended(props) {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
@@ -36,7 +16,26 @@ export default function Recommended() {
         setCards(response);
       })
       .catch((err) => console.error(err));
-  },[]);
+  }, []);
+
+  if (!props.isLogin) {
+    return (
+      <>
+        <Container
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "80vh",
+          }}
+        >
+          <Typography sx={{ textDecoration: "none", color: "white" }}>
+            <Link to="/signin">Sign In</Link> to access this Content
+          </Typography>
+        </Container>
+      </>
+    );
+  }
 
   return (
     <>
@@ -46,61 +45,61 @@ export default function Recommended() {
           sx={{
             flexGrow: 1,
             overflow: "auto",
-            height: '85vh'
           }}
         >
           <Container maxWidth="lg" sx={{ mb: 0 }}>
             <Grid container alignItems="flex-start" justifyContent="flex-start">
               {/* blogs*/}
               <Grid item xs={12} md={12} xl={12}>
-              <Paper
+                <Paper
                   sx={{
                     p: 5,
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "center",
+                    justifyContent: "start",
                     alignItems: "center",
                     bgcolor: "#0f2027",
-                    // width: "60vw",
-                    // height: "85vh",
-                    // overflow: "scroll",
+                    height: "85vh",
+                    overflow: "scroll",
+                    mt: { xs: 5, lg: 0 },
                   }}
                 >
-                    <Typography
-                      component="h1"
-                      variant="h5"
-                      // pd="5"
-                      mt='10'
-                      fontWeight="500"
-                      color="White"
-                      gutterBottom
+                  <Typography
+                    component="h1"
+                    variant="h5"
+                    // pd="5"
+                    mt="10"
+                    fontWeight="500"
+                    color="White"
+                    gutterBottom
+                  >
+                    Recommended Blogs
+                  </Typography>
+                  <hr />
+                  <Grid item xs={12}>
+                    <Grid
+                      container
+                      rowSpacing={1}
+                      spacing={2}
+                      direction="row"
+                      justifyContent="center"
+                      alignItems="center"
                     >
-                      Recommended Blogs
-                    </Typography>
-                    <Grid item xs={12}>
-                      <Grid
-                        container
-                        rowSpacing={1}
-                        spacing={2}
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        {cards.slice(0,12).map((card) => (
-                          <Grid item xs={12} md={3} xl={3}>
-                            <item key={card.blog_id}>
-                              <Link to={`/blog/${card.blog_id}`}>
-                                <Card
-                                  title={card.name}
-                                  image={"data:image/jpg;base64," + card.image}
-                                  sx={{ md: "10px" }}
-                                />
-                              </Link>
-                            </item>
-                          </Grid>
-                        ))}
-                      </Grid>
+                      {cards.slice(0, 12).map((card) => (
+                        <Grid item xs={12} md={3} xl={3}>
+                          <item key={card.blog_id}>
+                            <Link to={`/blog/${card.blog_id}`}>
+                              <Card
+                                title={card.name}
+                                image={"data:image/jpg;base64," + card.image}
+                                sx={{ md: "10px" }}
+                              />
+                            </Link>
+                          </item>
+                        </Grid>
+                      ))}
                     </Grid>
+                  </Grid>
                   {/* </React.Fragment> */}
                 </Paper>
               </Grid>

@@ -7,12 +7,9 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Footer from "../UI_UX_Components/Footer";
 import { NewReleasesOutlined } from "@mui/icons-material";
-import {
-  Box,
-  Container,
-  Grid
-} from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import ListItems from "./ListItems";
+import { Link } from "react-router-dom";
 // import { Option } from "@mui/joy";
 // import { Link } from "react-router-dom";
 // import { ListDivider } from "@mui/joy";
@@ -20,31 +17,36 @@ import ListItems from "./ListItems";
 
 const defaultTheme = createTheme();
 
-export default function AddNewRegion() {
-  sessionStorage.setItem("userType","ADMIN");
-
+export default function AddNewRegion(props) {
   const [name, setRegionName] = React.useState("");
   const [description, setDescription] = React.useState("");
 
   const handleSubmit = (event) => {
-    console.log("form submitted...");
     event.preventDefault();
-    const regionDetails = { name, description };
-    fetch("http://localhost:8181/v1/region/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(regionDetails),
-    })
-      // .then(response => response.json())
-      .then((response) => {
-        if (response.status === 401)
-          alert("Serve error \n try After some time");
-        alert("New Region Added.");
-      })
-      .catch((e) => {
-        alert("New Blog Added.");
-        console.log(e);
-      });
+
+    if (props.isLogin) {
+      const regionDetails = { name, description };
+      fetch(
+        "http://" + window.location.host.split(":")[0] + ":8181/v1/region/add",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(regionDetails),
+        }
+      )
+        // .then(response => response.json())
+        .then((response) => {
+          if (response.status === 401)
+            alert("Serve error \n try After some time");
+          alert("New Region Added.");
+        })
+        .catch((e) => {
+          alert("New Blog Added.");
+          console.log(e);
+        });
+    } else {
+      alert("sign in to add blog");
+    }
   };
 
   return (
@@ -129,13 +131,10 @@ export default function AddNewRegion() {
                         >
                           Add
                         </Button>
-                        <Button
-                          fullWidth
-                          variant="contained"
-                          sx={{ mb: 2 }}
-                          href="/dashboard"
-                        >
-                          Cancel
+                        <Button fullWidth variant="contained" sx={{ mb: 2 }}>
+                          <Link to="/dashboard" style={{ color: "white" }}>
+                            Cancel
+                          </Link>
                         </Button>
                       </Box>
                     </Box>
@@ -145,7 +144,11 @@ export default function AddNewRegion() {
             </Grid>
             {/* Search Region */}
             <ListItems
-              fetchUrl="http://localhost:8181/v1/region/allRegions"
+              fetchUrl={
+                "http://" +
+                window.location.host.split(":")[0] +
+                ":8181/v1/region/allRegions"
+              }
               TitleName="Region"
             />
           </Grid>

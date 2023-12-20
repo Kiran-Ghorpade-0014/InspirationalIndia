@@ -19,7 +19,7 @@ export default function Explore() {
   const [selectedRegion, setSelectedRegion] = React.useState([]);
 
   React.useEffect(() => {
-    fetch("http://localhost:8181/v1/region/allRegions", {
+    fetch("http://"+window.location.host.split(':')[0]+":8181/v1/region/allRegions", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -33,13 +33,9 @@ export default function Explore() {
 
   const handleClick = (region) => {
     setSelectedRegion(region);
-    fetch(
-      "http://localhost:8181/v1/blog/getBlogByRegion/" +
-        region.region_id,
-      {
-        method: "GET",
-      }
-    )
+    fetch("http://"+window.location.host.split(':')[0]+":8181/v1/blog/getBlogByRegion/" + region.region_id, {
+      method: "GET",
+    })
       .then((response) => response.json())
       .then((response) => {
         setCards(response);
@@ -70,8 +66,12 @@ export default function Explore() {
                     height: "85vh",
                     width: "350px",
                     overflow: "scroll",
+                    mb:'10px',
+                    mt:{xs:5, lg:0}
                   }}
                 >
+                  <Typography color='white' variant="h6" align="center">Regions </Typography>
+                  <hr/>
                   <List>
                     {regions.map((region) => (
                       <>
@@ -92,93 +92,111 @@ export default function Explore() {
                 </Paper>
               </Grid>
 
-              {/* blogs*/}
               <Grid item xs={12} md={8} xl={8}>
-                <Paper
-                  sx={{
-                    p: 5,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    bgcolor: "#0f2027",
-                    width: "60vw",
-                    height: "85vh",
-                    overflow: "scroll",
-                  }}
-                >
-                  <Container maxWidth="lg" sx={{ mb: 0 }}>
+                <Grid Container>
+                  <Grid item>
                     <Paper
                       sx={{
-                        p: 2,
-                        md: 10,
+                        p: {lg:5,xs:2},
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: "center",
+                        justifyContent: "start",
                         alignItems: "start",
-                        bgcolor: "white",
-                        color: "#0f2027",
+                        bgcolor: "#0f2027",
+                        width: {lg:"60vw",mx:'60vw',xs:'90vw'},
+                        height: {lg:"25vh",xs:'40vh'},
+                        overflow: "scroll",
+                        mb: 1,
                       }}
                     >
-                      <React.Fragment>
+                      <Container maxWidth="lg" sx={{ mb: 0 }}>
+                        <Paper
+                          sx={{
+                            p: 2,
+                            md: 10,
+                            ml:{xs:0},
+                            bgcolor: "white",
+                            color: "#0f2027",
+                            width: {lg:"52vw",mx:'52vw',xs:'75vw'},
+                          }}
+                        >
+                          <React.Fragment>
+                            <Typography
+                              component="h1"
+                              variant="h5"
+                              fontFamily="monospace"
+                            >
+                              About :
+                            </Typography>
+                            <Typography
+                              component="h1"
+                              variant="h6"
+                              color="#0f2027"
+                              fontSize=""
+                            >
+                              {selectedRegion ? selectedRegion.description : ""}
+                              <br />
+                            </Typography>
+                          </React.Fragment>
+                        </Paper>
+                      </Container>
+                    </Paper>
+                  </Grid>
+                  <Grid item>
+                    <Paper
+                      sx={{
+                        p: 3,
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "start",
+                        alignItems: "center",
+                        bgcolor: "#0f2027",
+                        width: {lg:"60vw",mx:'60vw',xs:'90vw'},
+                        height: "60vh",
+                        overflow: "scroll",
+                      }}
+                    >
                         <Typography
                           component="h1"
                           variant="h5"
-                          fontFamily="monospace"
+                          pd="5"
+                          fontWeight="500"
+                          color="White"
+                          gutterBottom
                         >
-                          About :
+                          Blogs
                         </Typography>
-                        <Typography
-                          component="h1"
-                          variant="h6"
-                          color="#0f2027"
-                          fontSize=""
-                        >
-                          {selectedRegion ? selectedRegion.description : ""}
-                          <br />
-                        </Typography>
-                      </React.Fragment>
-                    </Paper>
-                  </Container>
-                  <React.Fragment>
-                    <Typography
-                      component="h1"
-                      variant="h5"
-                      pd="5"
-                      fontWeight="500"
-                      color="White"
-                      gutterBottom
-                    >
-                      <br/>
-                      Blogs
-                    </Typography>
-                    <Grid />
-                    <Grid item xs={12}>
-                      <Grid
-                        container
-                        rowSpacing={1}
-                        spacing={2}
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="center"
-                      >
-                        {cards.map((card) => (
-                          <Grid item xs={12} md={4} xl={4}>
-                            <item key={card.blog_id}>
-                              <Link to={`/blog/${card.blog_id}`}>
-                                <Card
-                                  title={card.name}
-                                  image={"data:image/jpg;base64," + card.image}
-                                  sx={{ md: "10px" }}
-                                />
-                              </Link>
-                            </item>
+                        <hr/>
+                        <Grid />
+                        <Grid item xs={12}>
+                          <Grid
+                            container
+                            rowSpacing={1}
+                            spacing={5}
+                            direction="row"
+                            justifyContent="center"
+                            alignItems="center"
+                          >
+                            {cards.map((card) => (
+                              <Grid item xs={12} md={4} xl={4}>
+                                <item key={card.blog_id}>
+                                  <Link to={`/blog/${card.blog_id}`}>
+                                    <Card
+                                      title={card.name}
+                                      image={
+                                        "data:image/jpg;base64," + card.image
+                                      }
+                                      sx={{ md: "10px" }}
+                                    />
+                                  </Link>
+                                </item>
+                              </Grid>
+                            ))}
                           </Grid>
-                        ))}
-                      </Grid>
-                    </Grid>
-                  </React.Fragment>
-                </Paper>
+                        </Grid>
+                    </Paper>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
           </Container>

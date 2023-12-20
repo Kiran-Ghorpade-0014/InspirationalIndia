@@ -15,7 +15,7 @@ export default function BlogReport() {
   // let key_arr ;
 
   React.useEffect(() => {
-    fetch("http://localhost:8181/v1/blog/allBlogs", {
+    fetch("http://"+window.location.host.split(':')[0]+":8181/v1/blog/allBlogs", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })

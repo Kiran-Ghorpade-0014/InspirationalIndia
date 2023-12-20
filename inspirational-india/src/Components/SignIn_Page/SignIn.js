@@ -17,30 +17,34 @@ import { useNavigate } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function SignIn(props) {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    console.log("form submitted...");
     event.preventDefault();
     const userDetails = { username, password };
-    fetch("http://localhost:8181/v1/user/authentication", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userDetails),
-    })
-      .then(response => response.json())
-      .then(response => {
-          if(response === undefined)
-            alert("Login Failed")
-          sessionStorage.setItem("userType","USER");
-          alert("Login Successfull.")
-          sessionStorage.setItem("userDetails", JSON.stringify(response));
-          sessionStorage.setItem("username",response.username.toString());                                       
-          sessionStorage.setItem("userid",response.user_Id.toString());                                       
-          navigate("/");
+    fetch(
+      "http://" +
+        window.location.host.split(":")[0] +
+        ":8181/v1/user/authentication",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userDetails),
+      }
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        if (response === undefined) alert("Login Failed");
+        sessionStorage.setItem("userType", "USER");
+        alert("Login Successfull.");
+        props.updateFlag();
+        sessionStorage.setItem("userDetails", JSON.stringify(response));
+        sessionStorage.setItem("username", response.username.toString());
+        sessionStorage.setItem("userid", response.user_Id.toString());
+        navigate("/");
       })
       .catch((e) => {
         alert("Login Failed.");
@@ -106,23 +110,14 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mb: 2 }}
-              href="/admin/signin"
-            >
-              <Typography>Admin Login</Typography>
+            <Button type="submit" fullWidth variant="contained" sx={{ mb: 2 }}>
+              <Link to="/admin/signin" style={{ color: "white" }}>
+                Admin Login
+              </Link>
             </Button>
             <Grid container sx={{ mb: 4 }}>
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid> */}
               <Grid item>
-                <Link href="/registration" variant="body1">
+                <Link to="/registration" variant="body1">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

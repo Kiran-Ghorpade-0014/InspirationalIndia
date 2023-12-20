@@ -45,8 +45,8 @@ export default function ListItems(props) {
             mt: 7,
           }}
         >
-          <Typography component="h1" variant="h5" color="white">
-            {props.TitleName} List :
+          <Typography component="h1" variant="h5" color="white" align="center">
+            {props.TitleName} List 
             <hr />
           </Typography>
           <List>

@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow: none;
 }
 
 body {
@@ -12,6 +13,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+a{
+  text-decoration: none;
+  color: red;
 }
 
 code {
@@ -30,4 +36,22 @@ code {
     left: 0;
     top: 0;
   }
+}
+
+::-webkit-scrollbar{
+  width: 1px;
+}
+
+::-webkit-scrollbar-track{
+  /* background: #f1f1f1; */
+  background: none;
+}
+
+::-webkit-scrollbar-thumb{
+  background: white;
+}
+
+hr{
+  width: 43vh;
+  margin-bottom: 20px;
 }

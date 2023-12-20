@@ -14,7 +14,7 @@ export default function RegionReport() {
   const [rows, setRows] = React.useState([]);
 
   React.useEffect(() => {
-    fetch("http://localhost:8181/v1/region/allRegions", {
+    fetch("http://"+window.location.host.split(':')[0]+":8181/v1/region/allRegions", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })

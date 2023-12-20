@@ -23,23 +23,24 @@ export default function SignIn() {
   const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
 
-
   const handleSubmit = (event) => {
     console.log("form submitted...");
     event.preventDefault();
     const userDetails = { email, username, password };
-    fetch("http://localhost:8181/v1/user/add", {
-      method: "POST",
-      headers: { "Content-Type": "application/json"},
-      body: JSON.stringify(userDetails),
-    })
+    fetch(
+      "http://" + window.location.host.split(":")[0] + ":8181/v1/user/add",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userDetails),
+      }
+    )
       .then((response) => {
-        if(response.status === 201)
-        alert("Registration Successfull...");
+        if (response.status === 201) alert("Registration Successfull...");
         navigate("/signin");
       })
       .catch(() => {
-        alert("Exception Occure.")
+        alert("Exception Occure.");
       });
   };
 
@@ -104,23 +105,24 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              href="#"
               onClick={handleSubmit}
             >
               Register
             </Button>
-            <Button fullWidth variant="contained" sx={{ mb: 2 }} href="/">
-              Cancel
+            <Button fullWidth variant="contained" sx={{ mb: 2 }}>
+              <Link to="/" style={{ color: "white" }}>
+                Cancel
+              </Link>
             </Button>
             <Grid container sx={{ mb: 4 }}>
               {/* <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link to="#" variant="body2">
                   Forgot password?
                 </Link>
               </Grid> */}
               <Grid item>
-                <Link href="/signin" variant="body1">
-                  {"Already have an account? Sign In"}
+                <Link to="/signin" variant="body1">
+                  "Already have an account? Sign In"
                 </Link>
               </Grid>
             </Grid>

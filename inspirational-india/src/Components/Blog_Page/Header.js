@@ -11,7 +11,7 @@ function Header(props) {
 
   const fetchStatus = () => {
     // setLike({ icon: "🤍", likeCount: 200 });
-    fetch(`http://localhost:8181/v1/Like/isLiked/${props.blogId}/${user_id}`, {
+    fetch("http://"+window.location.host.split(':')[0]+`:8181/v1/Like/isLiked/${props.blogId}/${user_id}`, {
       method: "GET",
       // headers: { "Content-Type": "application/json" },
     })
@@ -26,7 +26,7 @@ function Header(props) {
   };
 
   React.useEffect(() => {
-    fetch(`http://localhost:8181/v1/Like/getTotalLikes/${props.blogId}`, {
+    fetch("http://"+window.location.host.split(':')[0]+`:8181/v1/Like/getTotalLikes/${props.blogId}`, {
       method: "GET",
     })
       .then((response)=> response.json())
@@ -48,7 +48,7 @@ function Header(props) {
       formData.append("blog", props.blogId);
       formData.append("user", user_id);
 
-      fetch("http://localhost:8181/v1/Like/add", {
+      fetch("http://"+window.location.host.split(':')[0]+":8181/v1/Like/add", {
         method: "POST",
         body: formData,
       })

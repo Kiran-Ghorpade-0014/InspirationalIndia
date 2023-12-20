@@ -1,41 +1,46 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link, useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
-  const [password, setPassword] = React.useState('');
+export default function AdminSignIn(props) {
+  const [password, setPassword] = React.useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    if(password === ''){
+    if (password === "") {
       return;
     }
     event.preventDefault();
-    fetch("http://localhost:8181/v1/user/admin/authentication", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: password.toString()
-    })
+    fetch(
+      "http://" +
+        window.location.host.split(":")[0] +
+        ":8181/v1/user/admin/authentication",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: password.toString(),
+      }
+    )
       // .then(response => response.json())
-      .then(response => {
-          if(response.status !== 200)
-            throw new Error("Login Failed");
-          else{
-            sessionStorage.setItem("userType","ADMIN");
-            alert("Login Successfull.");
-            navigate("/dashboard");
-          }
+      .then((response) => {
+        if (response.status !== 200) throw new Error("Login Failed");
+        else {
+          sessionStorage.setItem("userType", "ADMIN");
+          alert("Login Successfull.");
+          props.updateFlag();
+          navigate("/dashboard");
+        }
       })
       .catch((e) => {
         alert("Login Failed.");
@@ -44,24 +49,33 @@ export default function SignIn() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme} >
-      <Container component="main" maxWidth="xs" sx={{backgroundColor:'#ffffff'}}>
+    <ThemeProvider theme={defaultTheme}>
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{ backgroundColor: "#ffffff" }}
+      >
         {/* <CssBaseline /> */}
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5" color={'success'}>
-           Admin Sign in
+          <Typography component="h1" variant="h5" color={"success"}>
+            Admin Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -70,7 +84,7 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
-              onChange={(e)=> setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <Button
               type="submit"
@@ -85,13 +99,14 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mb: 8 }}
-              href="/signin"
             >
-              User Login
+              <Link to="/signin" style={{ color: "white" }}>
+                User Login
+              </Link>
             </Button>
             {/* <Grid container>
               <Grid item>
-                <Link href="#" variant="body1">
+                <Link to="#" variant="body1">
                   {"Forgot Password ?"}
                 </Link>
               </Grid>

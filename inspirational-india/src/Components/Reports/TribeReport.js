@@ -14,7 +14,7 @@ export default function TribeReport() {
   const [rows, setRows] = React.useState([]);
 
   React.useEffect(() => {
-    fetch("http://localhost:8181/v1/tribe/allTribes", {
+    fetch("http://"+window.location.host.split(':')[0]+":8181/v1/tribe/allTribes", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
