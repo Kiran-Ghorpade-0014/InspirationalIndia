@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 function Header(props) {
-  const [like, setLike] = React.useState({ icon: "🤍", likeCount: 200 });
+  const [like, setLike] = React.useState({ icon: "🤍", likeCount: 0 });
   const [totalLikes, setTotalLikes] = React.useState(0);
   let user_id = sessionStorage.getItem("userid");
 

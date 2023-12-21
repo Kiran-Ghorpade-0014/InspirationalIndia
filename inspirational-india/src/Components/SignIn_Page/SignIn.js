@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -11,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Footer from "../UI_UX_Components/Footer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -37,9 +36,9 @@ export default function SignIn(props) {
     )
       .then((response) => response.json())
       .then((response) => {
-        if (response === undefined) alert("Login Failed");
+        if (response === undefined) props.openAlert("error","Login Failed");
         sessionStorage.setItem("userType", "USER");
-        alert("Login Successfull.");
+        props.openAlert("success","Login Successfull.");
         props.updateFlag();
         sessionStorage.setItem("userDetails", JSON.stringify(response));
         sessionStorage.setItem("username", response.username.toString());
@@ -47,7 +46,7 @@ export default function SignIn(props) {
         navigate("/");
       })
       .catch((e) => {
-        alert("Login Failed.");
+        props.openAlert("error","Login Failed.");
         console.log(e);
       });
   };
@@ -110,15 +109,19 @@ export default function SignIn(props) {
             >
               Sign In
             </Button>
-            <Button type="submit" fullWidth variant="contained" sx={{ mb: 2 }}>
+            <Button fullWidth variant="contained" sx={{ mb: 2 }}>
               <Link to="/admin/signin" style={{ color: "white" }}>
                 Admin Login
               </Link>
             </Button>
             <Grid container sx={{ mb: 4 }}>
               <Grid item>
-                <Link to="/registration" variant="body1">
-                  {"Don't have an account? Sign Up"}
+                <Link
+                  to="/registration"
+                  variant="body1"
+                  style={{ color: "Blue" }}
+                >
+                  Don't have an account? Sign Up
                 </Link>
               </Grid>
             </Grid>

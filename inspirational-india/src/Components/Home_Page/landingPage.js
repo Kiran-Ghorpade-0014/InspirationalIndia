@@ -167,7 +167,7 @@ function LandingPage() {
               {isFirst ? (
                 <MuiCard
                   sx={{
-                    width: "60vw",
+                    width: "40vw",
                     backgroundColor: "white",
                   }}
                 >

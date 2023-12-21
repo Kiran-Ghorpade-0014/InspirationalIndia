@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -11,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Footer from "../UI_UX_Components/Footer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -24,7 +23,6 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    console.log("form submitted...");
     event.preventDefault();
     const userDetails = { email, username, password };
     fetch(
@@ -121,8 +119,8 @@ export default function SignIn() {
                 </Link>
               </Grid> */}
               <Grid item>
-                <Link to="/signin" variant="body1">
-                  "Already have an account? Sign In"
+                <Link to="/signin" variant="body1" style={{color:'Blue'}}>
+                  Already have an account? Sign In
                 </Link>
               </Grid>
             </Grid>

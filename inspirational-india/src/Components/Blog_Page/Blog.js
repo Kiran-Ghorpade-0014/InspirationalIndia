@@ -43,7 +43,7 @@ export default function Blog(props) {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container maxWidth="lg" sx={{mt:{xs:5, ls:0, mx:0}}}>
-        <Header title="Blog" blogId={blog_Id}/>
+        <Header title="Blog" blogId={blog_Id} isLogin={props.isLogin}/>
         <Grid
           container
           display="flex"
