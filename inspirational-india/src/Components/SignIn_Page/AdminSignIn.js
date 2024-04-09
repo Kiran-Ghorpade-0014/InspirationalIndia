@@ -34,17 +34,16 @@ export default function AdminSignIn(props) {
     )
       // .then(response => response.json())
       .then((response) => {
-        if (response.status !== 200)  props.openAlert("error","Login Failed.");
-
+        if (response.status !== 200) alert("error", "Login Failed.");
         else {
           sessionStorage.setItem("userType", "ADMIN");
-          props.openAlert("success","Login Successfull.");
+          alert("success", "Login Successfull.");
           props.updateFlag();
           navigate("/dashboard");
         }
       })
       .catch((e) => {
-        props.openAlert("error","Login Failed.");
+        alert("error", "Login Failed.");
         console.log(e);
       });
   };

@@ -20,16 +20,11 @@ import About from "../About/About";
 import ErrorPage from "../Error_page/ErrorPage";
 import Reports from "../Admin_Dashboard/Reports";
 import { useState } from "react";
-import CustomAlert from "../UI_UX_Components/CustomAlert";
-import { Snackbar, Stack } from "@mui/material";
 
 
 function Home() {
 
   const [isLogin, setIsLogin] = useState(false);
-  const [alertOpen, setAlertOpen] = useState(true);
-  const [alertType, setAlertType] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
 
   const style = {
     backgroundColor: "#264651",
@@ -41,24 +36,11 @@ function Home() {
     justifyItems: "space-evenly",
   };
 
-  const openAlert=(type, message)=>{
-      setAlertOpen(true);
-      setAlertType(type);
-      setAlertMessage(message);
-  }
-
   return (
     <>
       <Router>
         <div style={style}>
           <Appbar flag={isLogin} />
-          
-           {/* Material-UI Alert */}
-           <Stack sx={{ width: '50vw', alignItems:'center', justifyContent:'center', display:'flex' }} spacing={2}>
-            <CustomAlert type={alertType} message={alertMessage} alertOpen={alertOpen} handleCloseAlert={()=> setAlertOpen(false)}/>
-          </Stack>
-
-
 
           <div>
             <Routes>
@@ -78,8 +60,8 @@ function Home() {
               <Route path="/manage/reports/:type" element={<Reports isLogin={isLogin}/>} />
 
               {/* Sign In - Sign Out Manager */}
-              <Route path="/admin/signin" element={<SignIn openAlert={openAlert} updateFlag={()=>setIsLogin(true)}/>} />
-              <Route path="/signin" element={<UserSignIn openAlert={openAlert} updateFlag={()=>setIsLogin(true)}/>} />
+              <Route path="/admin/signin" element={<SignIn updateFlag={()=>setIsLogin(true)}/>} />
+              <Route path="/signin" element={<UserSignIn updateFlag={()=>setIsLogin(true)}/>} />
               <Route path="/signout" element={<SignOut updateFlag={()=>setIsLogin(false)}/>} />
             </Routes>
           </div>

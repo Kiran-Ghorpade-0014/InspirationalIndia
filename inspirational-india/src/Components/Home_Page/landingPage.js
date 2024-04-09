@@ -152,34 +152,47 @@ function LandingPage() {
 
           <Grid2 item xs={12} md={6} xl={6}>
             {/* Cards */}
-            <Grid2
-              container
-              rowSpacing={1}
-              spacing={8}
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              sx={{
-                mt: "15%",
-                md: "10%",
-              }}
-            >
-              {isFirst ? (
-                <MuiCard
+
+            {isFirst ? (
+              <Grid2
+                container
+                rowSpacing={1}
+                spacing={8}
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                  mt: "5%",
+                  md: "10%",
+                }}
+              >
+                <img
+                  component="img"
+                  height="500"
+                  width="460"
+                  src="../../../incredible-india.png"
+                  alt="Inspirational India"
                   sx={{
-                    width: "40vw",
-                    backgroundColor: "white",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    background: "cover",
+                  }}
+                />
+              </Grid2>
+            ) : (
+              <>
+                <Grid2
+                  container
+                  rowSpacing={1}
+                  spacing={8}
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{
+                    mt: "15%",
+                    md: "10%",
                   }}
                 >
-                  <CardMedia
-                    component="img"
-                    height="400"
-                    image="../../../incredible-india.jpg"
-                    alt="Inspirational India"
-                  />
-                </MuiCard>
-              ) : (
-                <>
                   {cards.slice(0, 6).map((card) => (
                     <Grid2 key={card.blog_id} item xs={12} md={4} xl={4}>
                       <Link to={`/blog/${card.blog_id}`}>
@@ -191,9 +204,9 @@ function LandingPage() {
                       </Link>
                     </Grid2>
                   ))}
-                </>
-              )}
-            </Grid2>
+                </Grid2>
+              </>
+            )}
           </Grid2>
           <Footer color="white" />
         </Grid2>

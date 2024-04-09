@@ -36,9 +36,9 @@ export default function SignIn(props) {
     )
       .then((response) => response.json())
       .then((response) => {
-        if (response === undefined) props.openAlert("error","Login Failed");
+        if (response === undefined) alert("error","Login Failed");
         sessionStorage.setItem("userType", "USER");
-        props.openAlert("success","Login Successfull.");
+        alert("success","Login Successfull.");
         props.updateFlag();
         sessionStorage.setItem("userDetails", JSON.stringify(response));
         sessionStorage.setItem("username", response.username.toString());
@@ -46,7 +46,7 @@ export default function SignIn(props) {
         navigate("/");
       })
       .catch((e) => {
-        props.openAlert("error","Login Failed.");
+        alert("error","Login Failed.");
         console.log(e);
       });
   };
